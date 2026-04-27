@@ -296,42 +296,40 @@
 <section id="pricing" style="background: var(--bg-elev);">
   <div class="container">
     <h2 class="section-title">등급</h2>
-    <p class="section-sub">회원가입 시 Basic과 동일한 3일 무료 체험 제공. 체험 후 원하는 등급을 선택하세요.</p>
-    <p style="text-align:center; color: var(--text-muted); font-size: 13px; margin-top: -10px; margin-bottom: 30px;">업로드/렌더 횟수는 계정(아이디) 기준이며, 여러 채널을 운영하더라도 합산 적용됩니다.</p>
+    <p class="section-sub">회원가입 시 무료 체험 제공. 체험 후 원하는 등급을 선택하세요.</p>
     <div class="pricing" style="grid-template-columns: repeat(3, 1fr);">
       <div class="plan">
-        <div class="plan-name">Basic</div>
-        <p class="plan-tagline">크리에이터</p>
+        <div class="plan-name">💡 베이직</div>
+        <p class="plan-tagline">입문 / 1인 크리에이터</p>
         <ul>
-          <li>스타일 프리셋 12종 전체</li>
-          <li>영상 최대 2시간</li>
-          <li>1일 업로드/렌더 3개</li>
-          <li>수동/예약/일괄/스케줄 업로드</li>
-          <li>채널 1개</li>
+          <li>아이디 1개 · 채널 1개</li>
+          <li>1일 1영상 (월 30개)</li>
+          <li>풀옵션 (렌더 + 업로드 + 예약 + 자동화)</li>
+          <li>비주얼라이저 6종 + 인트로 자막</li>
+          <li>AI 메타데이터/썸네일 자동 생성</li>
         </ul>
       </div>
       <div class="plan featured">
-        <div class="plan-name">Pro</div>
-        <p class="plan-tagline">완전자동화</p>
+        <div class="plan-name">🚀 프로</div>
+        <p class="plan-tagline">수익형 / 멀티 채널 운영</p>
         <ul>
-          <li>모든 Basic 기능</li>
-          <li>완전자동화 (AI가 알아서)</li>
-          <li>영상 최대 10시간</li>
-          <li>1일 업로드/렌더 6개</li>
-          <li>채널 최대 6개</li>
-          <li>REWARD/PUNISHMENT 학습</li>
+          <li>모든 베이직 기능</li>
+          <li>아이디 1개 · 채널 6개 동시 운영</li>
+          <li>1일 6영상 (월 180개)</li>
+          <li>채널별 독립 설정 / 스타일 / 타임존</li>
+          <li>REWARD/PUNISHMENT 자율 학습</li>
           <li>우선 지원</li>
         </ul>
       </div>
       <div class="plan">
-        <div class="plan-name">Premium</div>
-        <p class="plan-tagline">에이전시 / 팀 운영</p>
+        <div class="plan-name">👑 프리미엄</div>
+        <p class="plan-tagline">팀 / 에이전시</p>
         <ul>
-          <li>Pro 라이선스 3개 제공</li>
-          <li>아이디 3개 독립 운영</li>
-          <li>채널 수 무제한</li>
+          <li>모든 프로 기능</li>
+          <li>아이디 3개 · 채널 18개</li>
+          <li>1일 18영상 (월 540개)</li>
+          <li>멀티 아이디 순차 자동 전환</li>
           <li>최우선 기술 지원</li>
-          <li>신규 기능 베타 접근</li>
         </ul>
       </div>
     </div>
@@ -344,35 +342,43 @@
     <div class="faq">
       <details>
         <summary>YouTube 계정이 필요한가요?</summary>
-        <p>네, 업로드할 대상 YouTube 채널의 Google 계정이 필요합니다. 앱은 OAuth 2.0으로 인증하며, 사용자 본인 채널에만 접근합니다. 이미 만들어진 영상의 메타데이터는 수정하지 않습니다.</p>
+        <p>네. 업로드할 YouTube 채널의 Google 계정이 필요합니다. OAuth 2.0 으로 인증하며 본인 채널에만 접근합니다.</p>
       </details>
       <details>
-        <summary>Gemini API 키는 어떻게 발급받나요?</summary>
-        <p>Google AI Studio(https://aistudio.google.com)에서 무료로 발급 가능합니다. 일일 무료 쿼터 내에서는 비용이 발생하지 않습니다.</p>
+        <summary>API 비용은 어떻게 되나요?</summary>
+        <p>Gemini API · YouTube API 모두 사용자 본인 계정 키를 사용하며, 일반 개인 채널 운영에서는 무료 한도 안에서 가능합니다 (신용카드 등록 불필요). 가이드: <a href="./youtube-api-guide.html">YouTube API 등록 가이드 27단계</a></p>
       </details>
       <details>
-        <summary>AI가 생성한 이미지·영상의 저작권은 누구 것인가요?</summary>
-        <p>Google Gemini API 이용약관에 따라 사용자(발급자)에게 있습니다. 단, 생성 결과물이 기존 저작물과 유사할 수 있으므로 YouTube 업로드 전 확인 권장.</p>
+        <summary>등급별 채널 / 업로드 한도는?</summary>
+        <p>
+          💡 <strong>베이직</strong> — 1 채널 · 1일 1영상 (월 30개)<br>
+          🚀 <strong>프로</strong> — 6 채널 · 1일 6영상 (월 180개), 채널별 독립 설정<br>
+          👑 <strong>프리미엄</strong> — 18 채널 · 1일 18영상 (월 540개), 아이디 3개 자동 전환
+        </p>
       </details>
       <details>
-        <summary>업로드한 음원의 저작권은 어떻게 처리되나요?</summary>
-        <p>사용자가 직접 제작하거나 정당하게 라이선스를 확보한 음원만 업로드해야 합니다. 저작권 침해 콘텐츠 업로드로 인한 책임은 사용자에게 있습니다.</p>
+        <summary>베이직은 정말 1채널만 되나요?</summary>
+        <p>네. 보안상 한 번 채널을 등록하면 다른 채널로 변경할 수 없습니다. 변경이 필요하면 고객센터 문의로 처리됩니다.</p>
       </details>
       <details>
-        <summary>다채널 운영 시 업로드 횟수는 어떻게 되나요?</summary>
-        <p>Ultimate 등급은 최대 6개 채널을 연결할 수 있으며, 하루 총 6개 영상을 업로드할 수 있습니다. 채널당 1개씩 6채널에 올려도 되고, 한 채널에 6개를 몰아서 올려도 됩니다. 자율 모드에서 채널별 자동 배분도 가능합니다.</p>
+        <summary>자동화 도중 다른 계정으로 로그인하면?</summary>
+        <p>로그아웃하는 즉시 자동화는 완전히 정지되며, 다른 사용자 데이터에 접근하지 않습니다. 사용자별 데이터는 모두 격리 저장됩니다.</p>
       </details>
       <details>
-        <summary>Super Ultimate는 뭐가 다른가요?</summary>
-        <p>Super Ultimate는 Ultimate 라이선스를 3개 제공합니다. 서로 다른 아이디(계정) 3개에 각각 적용할 수 있어, 팀이나 파트너와 함께 여러 채널을 독립적으로 운영할 수 있습니다.</p>
+        <summary>AI 결과물(이미지/영상)의 저작권은?</summary>
+        <p>Google Gemini API 이용약관에 따라 사용자(키 발급자) 에게 있습니다. 다만 결과물이 기존 저작물과 유사할 수 있어 업로드 전 확인을 권장합니다.</p>
       </details>
       <details>
-        <summary>MacOS / Linux에서 사용 가능한가요?</summary>
-        <p>현재 정식 지원은 Windows입니다. MacOS 빌드는 Pro+ 등급 한정 베타로 2026년 하반기 제공 예정입니다.</p>
+        <summary>업로드 음원의 저작권은?</summary>
+        <p>본인 제작 또는 정당하게 라이선스 확보한 음원만 업로드 가능. 저작권 침해 책임은 업로드한 사용자에게 있습니다.</p>
       </details>
       <details>
-        <summary>환불 정책은 어떻게 되나요?</summary>
-        <p>와디즈 펀딩은 와디즈 환불 정책을, 공식 판매 채널은 이용약관을 따릅니다. 라이선스 미활성 시 14일 이내 전액 환불 가능합니다. 자세한 사항은 <a href="./terms_of_service_ko.md">이용약관</a>을 확인해주세요.</p>
+        <summary>MacOS / Linux 도 되나요?</summary>
+        <p>현재 Windows 전용입니다.</p>
+      </details>
+      <details>
+        <summary>환불 정책은?</summary>
+        <p>와디즈 펀딩은 와디즈 환불 정책을, 공식 판매 채널은 이용약관을 따릅니다. 라이선스 미활성 시 14일 이내 전액 환불 가능. 자세한 사항은 <a href="./terms_of_service_ko.md">이용약관</a> 참고.</p>
       </details>
     </div>
   </div>
