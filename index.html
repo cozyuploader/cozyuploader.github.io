@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cozy Uploader - AI 음악 영상 자동 업로드</title>
+<meta name="description" content="AI로 YouTube 음악 영상을 자동 생성하고 업로드하는 크리에이터 도구. 시그니처 무드, 썸네일, 영상 렌더링을 한 번에.">
+<meta property="og:title" content="Cozy Uploader">
+<meta property="og:description" content="AI 음악 영상 자동 업로더 — 하루 6개 영상을 자율적으로 제작·업로드">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cozy-uploader.github.io">
+<style>
+  :root {
+    --bg: #0f1115;
+    --bg-card: #16191f;
+    --bg-elev: #1d2129;
+    --accent: #c084fc;
+    --accent-soft: #a855f7;
+    --text: #e8eaed;
+    --text-muted: #9aa0a6;
+    --border: #2a2f38;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-soft); }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(15,17,21,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  nav .container { display: flex; align-items: center; justify-content: space-between; }
+  .brand { font-weight: 700; font-size: 18px; letter-spacing: -0.3px; }
+  .brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--text-muted); font-size: 14px; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero {
+    padding: 100px 0 80px;
+    text-align: center;
+    background:
+      radial-gradient(800px 400px at 50% 0%, rgba(192,132,252,0.12), transparent),
+      var(--bg);
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+  .hero .lead {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin: 0 auto 40px;
+  }
+  .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all .2s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0f1115;
+  }
+  .btn-primary:hover { background: var(--accent-soft); color: white; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Sections */
+  section { padding: 80px 0; }
+  .section-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+    letter-spacing: -0.5px;
+  }
+  .section-sub {
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 16px;
+  }
+
+  /* Features */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .feature {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    transition: border-color .2s;
+  }
+  .feature:hover { border-color: var(--accent); }
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+  }
+  .feature h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .feature p { color: var(--text-muted); font-size: 14px; }
+
+  /* Pricing */
+  .pricing {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media (min-width: 1000px) {
+    .pricing { grid-template-columns: repeat(4, 1fr); max-width: 1100px; }
+  }
+  .plan {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .plan.featured {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, var(--bg-elev), var(--bg-card));
+    position: relative;
+  }
+  .plan.featured::before {
+    content: "추천";
+    position: absolute;
+    top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent);
+    color: #0f1115;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .plan-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .plan-tagline { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+  .plan ul { list-style: none; text-align: left; }
+  .plan li {
+    padding: 8px 0;
+    color: var(--text);
+    font-size: 14px;
+    display: flex;
+    gap: 8px;
+  }
+  .plan li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+  /* FAQ */
+  .faq { max-width: 800px; margin: 0 auto; }
+  details {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+  }
+  details summary {
+    font-weight: 600;
+    list-style: none;
+  }
+  details summary::after {
+    content: "＋";
+    float: right;
+    color: var(--accent);
+    transition: transform .2s;
+  }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p {
+    margin-top: 12px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  footer .links { display: flex; gap: 20px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+  footer .links a { color: var(--text-muted); }
+  footer .links a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="brand">Cozy <span>Uploader</span></div>
+    <div class="nav-links">
+      <a href="#features">기능</a>
+      <a href="#pricing">등급</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">문의</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <h1>AI가 매일 음악 영상을<br>자율적으로 만드는 도구</h1>
+    <p class="lead">
+      Cozy Uploader는 음악 플레이리스트 채널 크리에이터를 위한 데스크톱 앱입니다.
+      AI가 배경 이미지, 썸네일, 메타데이터를 생성하고 FFmpeg로 렌더링 후 YouTube에 자동 예약 업로드합니다.
+      Lofi / Jazz / Ambient 채널을 운영하는 모든 분들을 위한 자동화.
+    </p>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="#pricing">등급 보기</a>
+      <a class="btn btn-ghost" href="#faq">자주 묻는 질문</a>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <h2 class="section-title">주요 기능</h2>
+    <p class="section-sub">음악 파일 하나만 준비하면 나머지는 AI가 알아서.</p>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🎨</div>
+        <h3>AI 배경 이미지 생성</h3>
+        <p>Google Imagen 기반 AI가 10개 스타일 프리셋으로 분위기에 맞는 배경을 생성합니다. 지브리, 사실적 사진, 로파이, 네온 시티 등.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎬</div>
+        <h3>FFmpeg 영상 렌더링</h3>
+        <p>2K/1440p 해상도, 오디오 비주얼라이저, Ken Burns 효과, 인트로 자막까지 FFmpeg로 시네마틱 렌더링.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🤖</div>
+        <h3>AI 메타데이터 자동 생성</h3>
+        <p>제목·설명·태그를 Gemini가 CTR 최적화 관점에서 자동 작성. 타임스탬프 트랙리스트도 자동 삽입.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📅</div>
+        <h3>자율 운영 모드</h3>
+        <p>자정에 6개 영상을 계획→생성→예약 업로드, 새벽 3시에 성과 분석 → 학습. 시간이 지날수록 더 똑똑해집니다.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🌏</div>
+        <h3>타임존 자동 대응</h3>
+        <p>한국 거주자가 미국·유럽·일본 시청자 대상 채널 운영 시 타겟 타임존 기준으로 최적 시간대 자동 예약.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <h3>완전한 개인 계정 사용</h3>
+        <p>YouTube 인증 정보는 PC에만 저장됩니다. 서버로 전송하지 않으며, 사용자 본인 채널에만 접근합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="background: var(--bg-elev);">
+  <div class="container">
+    <h2 class="section-title">등급</h2>
+    <p class="section-sub">회원가입 시 Basic과 동일한 3일 무료 체험 제공. 체험 후 원하는 등급을 선택하세요.</p>
+    <p style="text-align:center; color: var(--text-muted); font-size: 13px; margin-top: -10px; margin-bottom: 30px;">업로드/렌더 횟수는 계정(아이디) 기준이며, 여러 채널을 운영하더라도 합산 적용됩니다.</p>
+    <div class="pricing" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="plan">
+        <div class="plan-name">Basic</div>
+        <p class="plan-tagline">크리에이터</p>
+        <ul>
+          <li>스타일 프리셋 12종 전체</li>
+          <li>영상 최대 2시간</li>
+          <li>1일 업로드/렌더 3개</li>
+          <li>수동/예약/일괄/스케줄 업로드</li>
+          <li>채널 1개</li>
+        </ul>
+      </div>
+      <div class="plan featured">
+        <div class="plan-name">Pro</div>
+        <p class="plan-tagline">완전자동화</p>
+        <ul>
+          <li>모든 Basic 기능</li>
+          <li>완전자동화 (AI가 알아서)</li>
+          <li>영상 최대 10시간</li>
+          <li>1일 업로드/렌더 6개</li>
+          <li>채널 최대 6개</li>
+          <li>REWARD/PUNISHMENT 학습</li>
+          <li>우선 지원</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Premium</div>
+        <p class="plan-tagline">에이전시 / 팀 운영</p>
+        <ul>
+          <li>Pro 라이선스 3개 제공</li>
+          <li>아이디 3개 독립 운영</li>
+          <li>채널 수 무제한</li>
+          <li>최우선 기술 지원</li>
+          <li>신규 기능 베타 접근</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title">자주 묻는 질문</h2>
+    <div class="faq">
+      <details>
+        <summary>YouTube 계정이 필요한가요?</summary>
+        <p>네, 업로드할 대상 YouTube 채널의 Google 계정이 필요합니다. 앱은 OAuth 2.0으로 인증하며, 사용자 본인 채널에만 접근합니다. 이미 만들어진 영상의 메타데이터는 수정하지 않습니다.</p>
+      </details>
+      <details>
+        <summary>Gemini API 키는 어떻게 발급받나요?</summary>
+        <p>Google AI Studio(https://aistudio.google.com)에서 무료로 발급 가능합니다. 일일 무료 쿼터 내에서는 비용이 발생하지 않습니다.</p>
+      </details>
+      <details>
+        <summary>AI가 생성한 이미지·영상의 저작권은 누구 것인가요?</summary>
+        <p>Google Gemini API 이용약관에 따라 사용자(발급자)에게 있습니다. 단, 생성 결과물이 기존 저작물과 유사할 수 있으므로 YouTube 업로드 전 확인 권장.</p>
+      </details>
+      <details>
+        <summary>업로드한 음원의 저작권은 어떻게 처리되나요?</summary>
+        <p>사용자가 직접 제작하거나 정당하게 라이선스를 확보한 음원만 업로드해야 합니다. 저작권 침해 콘텐츠 업로드로 인한 책임은 사용자에게 있습니다.</p>
+      </details>
+      <details>
+        <summary>다채널 운영 시 업로드 횟수는 어떻게 되나요?</summary>
+        <p>Ultimate 등급은 최대 6개 채널을 연결할 수 있으며, 하루 총 6개 영상을 업로드할 수 있습니다. 채널당 1개씩 6채널에 올려도 되고, 한 채널에 6개를 몰아서 올려도 됩니다. 자율 모드에서 채널별 자동 배분도 가능합니다.</p>
+      </details>
+      <details>
+        <summary>Super Ultimate는 뭐가 다른가요?</summary>
+        <p>Super Ultimate는 Ultimate 라이선스를 3개 제공합니다. 서로 다른 아이디(계정) 3개에 각각 적용할 수 있어, 팀이나 파트너와 함께 여러 채널을 독립적으로 운영할 수 있습니다.</p>
+      </details>
+      <details>
+        <summary>MacOS / Linux에서 사용 가능한가요?</summary>
+        <p>현재 정식 지원은 Windows입니다. MacOS 빌드는 Pro+ 등급 한정 베타로 2026년 하반기 제공 예정입니다.</p>
+      </details>
+      <details>
+        <summary>환불 정책은 어떻게 되나요?</summary>
+        <p>와디즈 펀딩은 와디즈 환불 정책을, 공식 판매 채널은 이용약관을 따릅니다. 라이선스 미활성 시 14일 이내 전액 환불 가능합니다. 자세한 사항은 <a href="./terms_of_service_ko.md">이용약관</a>을 확인해주세요.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container" style="text-align: center;">
+    <h2 class="section-title">문의</h2>
+    <p class="section-sub">기술 지원 · 라이선스 · 제휴 문의</p>
+    <p style="font-size: 18px;">
+      <a href="mailto:cozy_uploader@naver.com">cozy_uploader@naver.com</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="links">
+      <a href="./privacy_policy_ko.md">개인정보 처리방침</a>
+      <a href="./terms_of_service_ko.md">이용약관</a>
+      <a href="./privacy_policy_en.md">Privacy Policy (EN)</a>
+      <a href="./terms_of_service_en.md">Terms of Service (EN)</a>
+    </div>
+    <div>© 2026 Cozy Uploader · Yoseph Lee · All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
