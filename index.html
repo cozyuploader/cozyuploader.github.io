@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cozy Uploader - AI 음악 영상 자동 업로드</title>
-<meta name="description" content="AI로 YouTube 음악 영상을 자동 생성하고 업로드하는 크리에이터 도구. 시그니처 무드, 썸네일, 영상 렌더링을 한 번에.">
+<meta name="description" content="AI로 YouTube 음악 영상을 자동 생성하고 업로드하는 크리에이터 도구. AI 에이전트 코지가 시그니처 무드, 썸네일, 영상 렌더링을 한 번에 처리합니다.">
 <meta property="og:title" content="Cozy Uploader">
-<meta property="og:description" content="AI 음악 영상 자동 업로더 — 하루 6개 영상을 자율적으로 제작·업로드">
+<meta property="og:description" content="AI 음악 영상 자동 업로더 — 셋팅 한 번으로 평생 1일 1업로드 (채널당 1편/일)">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://cozy-uploader.github.io">
+<meta property="og:url" content="https://cozyuploader.github.io">
 <style>
   :root {
     --bg: #0f1115;
@@ -16,6 +16,8 @@
     --bg-elev: #1d2129;
     --accent: #c084fc;
     --accent-soft: #a855f7;
+    --gold: #ffc266;
+    --green: #1db954;
     --text: #e8eaed;
     --text-muted: #9aa0a6;
     --border: #2a2f38;
@@ -44,7 +46,7 @@
   nav .container { display: flex; align-items: center; justify-content: space-between; }
   .brand { font-weight: 700; font-size: 18px; letter-spacing: -0.3px; }
   .brand span { color: var(--accent); }
-  .nav-links { display: flex; gap: 28px; }
+  .nav-links { display: flex; gap: 24px; flex-wrap: wrap; }
   .nav-links a { color: var(--text-muted); font-size: 14px; }
   .nav-links a:hover { color: var(--text); }
 
@@ -69,6 +71,19 @@
     max-width: 720px;
     margin: 0 auto 40px;
   }
+  .hero .badge-row {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    background: rgba(192,132,252,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(192,132,252,0.3);
+  }
   .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .btn {
     display: inline-block;
@@ -78,16 +93,9 @@
     font-size: 15px;
     transition: all .2s;
   }
-  .btn-primary {
-    background: var(--accent);
-    color: #0f1115;
-  }
+  .btn-primary { background: var(--accent); color: #0f1115; }
   .btn-primary:hover { background: var(--accent-soft); color: white; transform: translateY(-1px); }
-  .btn-ghost {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
   .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
   /* Sections */
@@ -106,6 +114,55 @@
     font-size: 16px;
   }
 
+  /* Founding Member banner */
+  .founding {
+    background: linear-gradient(135deg, rgba(192,132,252,0.15), rgba(168,85,247,0.05));
+    border: 1px solid rgba(192,132,252,0.3);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+  }
+  .founding h2 { color: var(--accent); margin-bottom: 12px; }
+  .founding .messages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+    text-align: left;
+  }
+  .founding .msg {
+    background: rgba(15,17,21,0.5);
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .founding .msg .ico { font-size: 20px; margin-right: 6px; }
+
+  /* Pipeline */
+  .pipeline-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    counter-reset: step;
+  }
+  .pipeline-step {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    counter-increment: step;
+    position: relative;
+  }
+  .pipeline-step::before {
+    content: counter(step, decimal-leading-zero);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .pipeline-step h4 { margin-top: 6px; font-size: 16px; }
+  .pipeline-step p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
   /* Features */
   .features {
     display: grid;
@@ -120,83 +177,92 @@
     transition: border-color .2s;
   }
   .feature:hover { border-color: var(--accent); }
-  .feature-icon {
-    font-size: 28px;
-    margin-bottom: 14px;
-  }
-  .feature h3 {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
+  .feature-icon { font-size: 28px; margin-bottom: 12px; }
+  .feature h3 { font-size: 18px; margin-bottom: 8px; }
   .feature p { color: var(--text-muted); font-size: 14px; }
 
-  /* Pricing */
+  /* Pricing tier cards */
   .pricing {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  @media (min-width: 1000px) {
-    .pricing { grid-template-columns: repeat(4, 1fr); max-width: 1100px; }
   }
   .plan {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 32px 24px;
-    text-align: center;
+    padding: 28px;
   }
-  .plan.featured {
-    border-color: var(--accent);
-    background: linear-gradient(180deg, var(--bg-elev), var(--bg-card));
-    position: relative;
-  }
-  .plan.featured::before {
-    content: "추천";
-    position: absolute;
-    top: -12px; left: 50%; transform: translateX(-50%);
-    background: var(--accent);
-    color: #0f1115;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 20px;
-  }
-  .plan-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .plan-tagline { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
-  .plan ul { list-style: none; text-align: left; }
+  .plan.featured { border-color: var(--accent); }
+  .plan-name { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .plan-tagline { color: var(--text-muted); font-size: 14px; margin-bottom: 18px; }
+  .plan ul { list-style: none; }
   .plan li {
     padding: 8px 0;
-    color: var(--text);
+    border-bottom: 1px dashed var(--border);
     font-size: 14px;
-    display: flex;
-    gap: 8px;
   }
-  .plan li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .plan li:last-child { border-bottom: none; }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 24px 0; }
+  .reward-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .reward-table th {
+    background: rgba(192,132,252,0.1);
+    border-bottom: 2px solid var(--accent);
+    padding: 12px;
+    text-align: left;
+  }
+  .reward-table th.right { text-align: right; }
+  .reward-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .reward-table td.right { text-align: right; }
+  .reward-table td.muted { color: var(--text-muted); }
+  .reward-table .strong { font-weight: 700; }
+  .reward-table .row-pro { background: rgba(29,185,84,0.05); }
+  .reward-table .row-premium { background: rgba(192,132,252,0.05); }
+  .table-month th { background: rgba(255,194,102,0.1); border-bottom-color: var(--gold); }
+
+  /* Specs */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .spec-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .spec-card h3 { margin-bottom: 14px; }
+  .spec-card .row {
+    display: flex; justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 14px;
+  }
+  .spec-card .row:last-child { border-bottom: none; }
+  .spec-card .key { color: var(--text-muted); }
+
+  /* Channel analysis */
+  .channel-analysis-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .channel-analysis-table th, .channel-analysis-table td {
+    padding: 8px; border-bottom: 1px solid var(--border); text-align: left;
+  }
+  .channel-analysis-table th { background: rgba(192,132,252,0.05); color: var(--accent); }
 
   /* FAQ */
-  .faq { max-width: 800px; margin: 0 auto; }
   details {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 16px 20px;
     margin-bottom: 12px;
-    cursor: pointer;
   }
   details summary {
     font-weight: 600;
+    cursor: pointer;
     list-style: none;
+    font-size: 15px;
   }
   details summary::after {
     content: "＋";
@@ -205,7 +271,7 @@
     transition: transform .2s;
   }
   details[open] summary::after { transform: rotate(45deg); }
-  details p {
+  details p, details div {
     margin-top: 12px;
     color: var(--text-muted);
     font-size: 14px;
@@ -223,6 +289,24 @@
   footer .links { display: flex; gap: 20px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
   footer .links a { color: var(--text-muted); }
   footer .links a:hover { color: var(--accent); }
+
+  .pricing-summary {
+    text-align: center;
+    margin-top: 24px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .pricing-summary strong { color: var(--accent); }
+
+  .increase-banner {
+    background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(255,194,102,0.05));
+    border: 1px solid rgba(255,107,107,0.3);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    margin: 32px 0;
+  }
+  .increase-banner h3 { color: #ff8a8a; margin-bottom: 8px; }
 </style>
 </head>
 <body>
@@ -232,7 +316,9 @@
     <div class="brand">Cozy <span>Uploader</span></div>
     <div class="nav-links">
       <a href="#features">기능</a>
+      <a href="#pipeline">자동화</a>
       <a href="#pricing">등급</a>
+      <a href="#specs">사양</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">문의</a>
     </div>
@@ -241,82 +327,130 @@
 
 <section class="hero">
   <div class="container">
-    <h1>AI가 매일 음악 영상을<br>자율적으로 만드는 도구</h1>
+    <div class="badge-row">
+      <span class="hero-badge">🌏 글로벌 시장 타겟</span>
+      <span class="hero-badge">⚡ Founding Member 한정</span>
+      <span class="hero-badge">💎 평생 가격 보장</span>
+    </div>
+    <h1>매일 편집? No!<br>셋팅 한 번으로 평생 1일 1업로드</h1>
     <p class="lead">
       Cozy Uploader는 음악 플레이리스트 채널 크리에이터를 위한 데스크톱 앱입니다.
-      AI가 배경 이미지, 썸네일, 메타데이터를 생성하고 FFmpeg로 렌더링 후 YouTube에 자동 예약 업로드합니다.
-      Lofi / Jazz / Ambient 채널을 운영하는 모든 분들을 위한 자동화.
+      AI 에이전트 <strong style="color:var(--accent);">코지(Cozy)</strong>가 배경 이미지, 썸네일, 메타데이터를 생성하고 FFmpeg 로 1080p Full HD 렌더링 후 YouTube 에 자동 예약 업로드합니다.
+      Lofi / Jazz / Ambient 채널 운영자를 위한 자정 00:00 자동화.
     </p>
     <div class="btn-group">
       <a class="btn btn-primary" href="#pricing">등급 보기</a>
-      <a class="btn btn-ghost" href="#faq">자주 묻는 질문</a>
+      <a class="btn btn-ghost" href="#pipeline">자동화 파이프라인</a>
     </div>
   </div>
 </section>
 
+<!-- Founding Member -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="founding">
+      <h2>⭐ Founding Member 한정 (얼리 액세스)</h2>
+      <p style="color: var(--text-muted);">
+        와디즈 펀딩 한정 · <strong style="color:var(--text);">191명만</strong> 모집합니다.
+        펀딩 구매자는 평생 펀딩 가격으로 사용 가능합니다 (Grandfather Clause).
+      </p>
+      <div class="messages">
+        <div class="msg"><span class="ico">🔥</span><strong>정식 출시 시 ×3 인상</strong><br><span style="font-size:13px; color:var(--text-muted);">1년/평생권 정가의 3배, 월 구독료 ×2 인상</span></div>
+        <div class="msg"><span class="ico">💎</span><strong>구매 시점 가격 평생 보장</strong><br><span style="font-size:13px; color:var(--text-muted);">펀딩 구매자에게만 적용 (Grandfather Clause)</span></div>
+        <div class="msg"><span class="ico">🌏</span><strong>글로벌 시장 타겟</strong><br><span style="font-size:13px; color:var(--text-muted);">로파이/ASMR — 언어·얼굴 불필요</span></div>
+        <div class="msg"><span class="ico">⚡</span><strong>차별화를 위해 소수 정예만 모집</strong><br><span style="font-size:13px; color:var(--text-muted);">베타 운영 단계 / 사전 출시 (Pre-Launch)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 자동화 파이프라인 -->
+<section id="pipeline" style="background: var(--bg-elev);">
+  <div class="container">
+    <h2 class="section-title">자정 00:00 자동화 파이프라인</h2>
+    <p class="section-sub">매일 자정 코지가 8단계를 자동으로 실행합니다 (자율 운영 모드 - 프로/프리미엄)</p>
+    <div class="pipeline-steps">
+      <div class="pipeline-step"><h4>시장 분석</h4><p>트렌드·계절·시청자 선호 반영</p></div>
+      <div class="pipeline-step"><h4>음원 선정</h4><p>지정 폴더 스캔 → 주제별 곡 선택</p></div>
+      <div class="pipeline-step"><h4>썸네일 제작</h4><p>Imagen 4.0 + 텍스트 오버레이 (12스타일)</p></div>
+      <div class="pipeline-step"><h4>내용 작성</h4><p>Gemini 2.5 Flash — 제목/설명/태그</p></div>
+      <div class="pipeline-step"><h4>태그 추출</h4><p>CTR 최적화 키워드</p></div>
+      <div class="pipeline-step"><h4>영상 제작</h4><p>FFmpeg 렌더링 (libx264, CRF 23)</p></div>
+      <div class="pipeline-step"><h4>렌더링</h4><p>1080p Full HD 디폴트 (1440p/4K 선택)</p></div>
+      <div class="pipeline-step"><h4>업로드 예약</h4><p>타겟 국가 시각 자동 예약 (UTC 동기화)</p></div>
+    </div>
+    <p style="text-align:center; margin-top:32px; color:var(--text-muted); font-size:14px;">
+      ⏰ 매일 새벽 03:00 — 어제 영상 성과 자동 분석 → REWARD/PUNISHMENT 학습 → 다음 기획에 반영
+    </p>
+  </div>
+</section>
+
+<!-- 주요 기능 -->
 <section id="features">
   <div class="container">
     <h2 class="section-title">주요 기능</h2>
-    <p class="section-sub">음악 파일 하나만 준비하면 나머지는 AI가 알아서.</p>
+    <p class="section-sub">음악 파일 하나만 준비하면 나머지는 코지가 알아서.</p>
     <div class="features">
       <div class="feature">
         <div class="feature-icon">🎨</div>
         <h3>AI 배경 이미지 생성</h3>
-        <p>Google Imagen 기반 AI가 10개 스타일 프리셋으로 분위기에 맞는 배경을 생성합니다. 지브리, 사실적 사진, 로파이, 네온 시티 등.</p>
+        <p>Google Imagen 4.0 기반 12개 스타일 프리셋: 지브리, 사실적 사진, 로파이, 네온시티, 수채화, 픽셀아트, 3D, 유화, 미니멀, 판타지, 감성, 시네마틱.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">🎬</div>
         <h3>FFmpeg 영상 렌더링</h3>
-        <p>2K/1440p 해상도, 오디오 비주얼라이저, Ken Burns 효과, 인트로 자막까지 FFmpeg로 시네마틱 렌더링.</p>
+        <p>1080p Full HD 디폴트 (1440p/4K 선택), libx264 코덱, 비주얼라이저 6종, 인트로 자막, 타임스탬프 트랙리스트 자동 삽입.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">🤖</div>
         <h3>AI 메타데이터 자동 생성</h3>
-        <p>제목·설명·태그를 Gemini가 CTR 최적화 관점에서 자동 작성. 타임스탬프 트랙리스트도 자동 삽입.</p>
+        <p>Gemini 2.5 Flash 가 제목·설명·태그를 CTR 최적화 관점에서 자동 작성. 다중 영상 시 5가지 스타일 (POV/기능/감성/CTR/실용) 자동 분배.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">📅</div>
-        <h3>자율 운영 모드</h3>
-        <p>자정에 6개 영상을 계획→생성→예약 업로드, 새벽 3시에 성과 분석 → 학습. 시간이 지날수록 더 똑똑해집니다.</p>
+        <h3>자율 운영 모드 (Pro+)</h3>
+        <p>자정 00:00 에 채널당 1편씩 계획→생성→예약 업로드, 새벽 03:00 에 성과 분석 → 학습. 시간이 지날수록 더 똑똑해집니다.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">🌏</div>
-        <h3>타임존 자동 대응</h3>
-        <p>한국 거주자가 미국·유럽·일본 시청자 대상 채널 운영 시 타겟 타임존 기준으로 최적 시간대 자동 예약.</p>
+        <h3>글로벌 타임존 (17개)</h3>
+        <p>한국 거주자가 미국·유럽·일본 시청자 대상 채널 운영 시 타겟 타임존 기준으로 최적 시간대 자동 예약. UTC 완벽 동기화.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">🔒</div>
         <h3>완전한 개인 계정 사용</h3>
-        <p>YouTube 인증 정보는 PC에만 저장됩니다. 서버로 전송하지 않으며, 사용자 본인 채널에만 접근합니다.</p>
+        <p>YouTube 인증 정보는 PC 에만 저장됩니다 (Windows DPAPI 암호화). 서버 전송 없으며, 사용자 본인 채널에만 접근합니다.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- 등급 -->
 <section id="pricing" style="background: var(--bg-elev);">
   <div class="container">
     <h2 class="section-title">등급</h2>
-    <p class="section-sub">회원가입 시 무료 체험 제공. 체험 후 원하는 등급을 선택하세요.</p>
+    <p class="section-sub">3등급 × 2기간 × 3할인 = 18 리워드 / 191명 한정</p>
     <div class="pricing" style="grid-template-columns: repeat(3, 1fr);">
       <div class="plan">
         <div class="plan-name">💡 베이직</div>
         <p class="plan-tagline">입문 / 1인 크리에이터</p>
         <ul>
           <li>아이디 1개 · 채널 1개</li>
-          <li>1일 1영상 / 1년 365영상</li>
-          <li>풀옵션 (렌더 + 업로드 + 예약 + 자동화)</li>
+          <li>1일 1영상 · 1년 365영상</li>
+          <li>1080p Full HD 렌더링</li>
+          <li>AI 썸네일/제목/설명/태그</li>
           <li>비주얼라이저 6종 + 인트로 자막</li>
-          <li>AI 메타데이터/썸네일 자동 생성</li>
         </ul>
       </div>
       <div class="plan featured">
-        <div class="plan-name">🚀 프로</div>
+        <div class="plan-name">🚀 프로 ⭐</div>
         <p class="plan-tagline">수익형 / 멀티 채널 운영</p>
         <ul>
           <li>모든 베이직 기능</li>
           <li>아이디 1개 · 채널 6개 동시 운영</li>
-          <li>1일 6영상 / 1년 2,190영상</li>
-          <li>채널별 독립 설정 / 스타일 / 타임존</li>
+          <li>1일 6영상 · 1년 2,190영상</li>
+          <li>자율 운영 모드 (자정 자동화)</li>
+          <li>배치 업로드 + 1440p/4K 렌더링</li>
           <li>REWARD/PUNISHMENT 자율 학습</li>
         </ul>
       </div>
@@ -325,15 +459,207 @@
         <p class="plan-tagline">팀 / 에이전시</p>
         <ul>
           <li>모든 프로 기능</li>
-          <li>아이디 3개 · 채널 18개</li>
-          <li>1일 18영상 / 1년 6,570영상</li>
+          <li>아이디 3개 · 채널 18개 (3계정 × 6채널)</li>
+          <li>1일 18영상 · 1년 6,570영상</li>
           <li>멀티 아이디 순차 자동 전환</li>
         </ul>
       </div>
     </div>
+
+    <!-- 1년 라이선스 -->
+    <h3 style="text-align:center; margin: 50px 0 16px; font-size: 22px;">📆 1년 라이선스 (총 116명)</h3>
+    <div class="table-wrap">
+      <table class="reward-table">
+        <thead>
+          <tr>
+            <th>등급</th>
+            <th class="right">슈퍼얼리버드</th>
+            <th class="right">얼리버드</th>
+            <th class="right">정가</th>
+            <th class="right">정식출시 (×3)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="strong">베이직</span> <span class="muted">(75명)</span></td>
+            <td class="right"><span class="strong">33만원</span> <span class="muted">(40명)</span></td>
+            <td class="right">39만원 <span class="muted">(25명)</span></td>
+            <td class="right">49만원 <span class="muted">(10명)</span></td>
+            <td class="right muted">147만원</td>
+          </tr>
+          <tr class="row-pro">
+            <td><span class="strong">프로</span> ⭐ <span class="muted">(35명)</span></td>
+            <td class="right"><span class="strong">139만원</span> <span class="muted">(20명)</span></td>
+            <td class="right">168만원 <span class="muted">(10명)</span></td>
+            <td class="right">198만원 <span class="muted">(5명)</span></td>
+            <td class="right muted">417만원</td>
+          </tr>
+          <tr class="row-premium">
+            <td><span class="strong">프리미엄</span> 👑 <span class="muted">(6명)</span></td>
+            <td class="right"><span class="strong">315만원</span> <span class="muted">(3명)</span></td>
+            <td class="right">382만원 <span class="muted">(2명)</span></td>
+            <td class="right">450만원 <span class="muted">(1명)</span></td>
+            <td class="right muted">1,350만원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 평생사용권 -->
+    <h3 style="text-align:center; margin: 50px 0 16px; font-size: 22px;">♾️ 평생사용권 (한정판, 총 75명)</h3>
+    <div class="table-wrap">
+      <table class="reward-table">
+        <thead>
+          <tr>
+            <th>등급</th>
+            <th class="right">슈퍼얼리버드</th>
+            <th class="right">얼리버드</th>
+            <th class="right">정가</th>
+            <th class="right">정식출시 (×3)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="strong">베이직</span> <span class="muted">(45명)</span></td>
+            <td class="right"><span class="strong">79만원</span> <span class="muted">(20명)</span></td>
+            <td class="right">99만원 <span class="muted">(15명)</span></td>
+            <td class="right">120만원 <span class="muted">(10명)</span></td>
+            <td class="right muted">360만원</td>
+          </tr>
+          <tr class="row-pro">
+            <td><span class="strong">프로</span> ⭐ <span class="muted">(25명)</span></td>
+            <td class="right"><span class="strong">290만원</span> <span class="muted">(10명)</span></td>
+            <td class="right">370만원 <span class="muted">(10명)</span></td>
+            <td class="right">450만원 <span class="muted">(5명)</span></td>
+            <td class="right muted">1,350만원</td>
+          </tr>
+          <tr class="row-premium">
+            <td><span class="strong">프리미엄</span> 👑 <span class="muted">(4명)</span></td>
+            <td class="right"><span class="strong">630만원</span> <span class="muted">(2명)</span></td>
+            <td class="right">810만원 <span class="muted">(1명)</span></td>
+            <td class="right">980만원 <span class="muted">(1명)</span></td>
+            <td class="right muted">2,940만원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 월 구독료 -->
+    <h3 style="text-align:center; margin: 50px 0 16px; font-size: 22px;">💳 1년 라이선스 만료 후 월 구독료</h3>
+    <div class="table-wrap">
+      <table class="reward-table table-month">
+        <thead>
+          <tr>
+            <th>등급</th>
+            <th class="right">현재 월 구독료</th>
+            <th class="right">정식 출시 후 (×2)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="strong">베이직</span></td>
+            <td class="right">월 49,000원</td>
+            <td class="right muted">월 99,000원</td>
+          </tr>
+          <tr class="row-pro">
+            <td><span class="strong">프로</span> ⭐</td>
+            <td class="right">월 198,000원</td>
+            <td class="right muted">월 399,000원</td>
+          </tr>
+          <tr class="row-premium">
+            <td><span class="strong">프리미엄</span> 👑</td>
+            <td class="right">월 450,000원</td>
+            <td class="right muted">월 900,000원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pricing-summary">
+      총 18 리워드 · <strong>191명 한정</strong> · 펀딩 진행에 따라 슈퍼얼리 → 얼리 → 정가 순으로 단계 인상<br>
+      펀딩 구매자는 <strong>평생 펀딩 가격 보장</strong> (Grandfather Clause). 정식 출시 후 인상은 신규 구매자에게만 적용.
+    </p>
+
+    <div class="increase-banner">
+      <h3>🔥 펀딩 종료 후 가격 인상 안내</h3>
+      <p style="color:var(--text-muted); font-size:14px;">
+        Cozy Uploader 는 와디즈 한정 판매 중입니다. <strong>정식 출시</strong> 시점에 다른 판매 채널이 오픈되면<br>
+        1년/평생권은 <strong style="color:#ff8a8a;">정가 ×3</strong>, 월 구독료는 <strong style="color:#ff8a8a;">×2</strong> 로 인상됩니다.
+      </p>
+    </div>
   </div>
 </section>
 
+<!-- 시스템 사양 -->
+<section id="specs">
+  <div class="container">
+    <h2 class="section-title">시스템 사양</h2>
+    <p class="section-sub">Windows 10/11 64bit 전용 (macOS / Linux 미지원)</p>
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h3>🟡 최소사양 (1~6채널)</h3>
+        <div class="row"><span class="key">OS</span><span>Windows 10 22H2 (64bit)</span></div>
+        <div class="row"><span class="key">CPU</span><span>i3 4세대 / Ryzen 3 1200 (4코어)</span></div>
+        <div class="row"><span class="key">RAM</span><span>8 GB</span></div>
+        <div class="row"><span class="key">저장</span><span>HDD/SSD 100GB (30GB 여유)</span></div>
+        <div class="row"><span class="key">인터넷</span><span>업로드 10 Mbps</span></div>
+      </div>
+      <div class="spec-card" style="border-color: var(--accent);">
+        <h3>🟢 권장사양 (1~6채널) ⭐</h3>
+        <div class="row"><span class="key">OS</span><span>Windows 11 (64bit)</span></div>
+        <div class="row"><span class="key">CPU</span><span>i5 10세대 / Ryzen 5 5500 (6코어)</span></div>
+        <div class="row"><span class="key">RAM</span><span>16 GB</span></div>
+        <div class="row"><span class="key">저장</span><span>NVMe SSD 256GB (50GB 여유)</span></div>
+        <div class="row"><span class="key">인터넷</span><span>업로드 30 Mbps</span></div>
+      </div>
+      <div class="spec-card" style="border-color: #ffc266;">
+        <h3>👑 18채널 (프리미엄 멀티) 추가 권장</h3>
+        <div class="row"><span class="key">RAM</span><span>32 GB 이상</span></div>
+        <div class="row"><span class="key">CPU</span><span>12코어 이상</span></div>
+        <div class="row"><span class="key">저장</span><span>NVMe SSD 1 TB 이상</span></div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">
+          ※ 18채널 동시 운영은 검증 진행 중. 검증 완료 후 공식 사양 업데이트 예정.
+        </p>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:24px; color:var(--text-muted); font-size:13px;">
+      ⚠️ 권장 안 함: Windows 7/8/8.1 · ARM Windows · 가상 머신 · HDD 전용 · 무선 인터넷 단독 · 노트북 배터리 동작<br>
+      ❌ 미지원: macOS · Linux · 모바일 · 32bit Windows
+    </p>
+  </div>
+</section>
+
+<!-- 채널 분석 -->
+<section style="background: var(--bg-elev);">
+  <div class="container">
+    <h2 class="section-title">실제 채널 분석 (8개 사례)</h2>
+    <p class="section-sub">2026-04-29 기준 — 음악 큐레이션 채널 운영 실태</p>
+    <div class="table-wrap">
+      <table class="channel-analysis-table">
+        <thead>
+          <tr>
+            <th>채널명</th><th>국가</th><th>운영기간</th><th>구독자</th><th>총영상</th><th>누적조회수</th><th>최근 평균</th><th>최고조회수</th><th>월 업로드</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>OOOffi</td><td>미국</td><td>약 9개월</td><td>1.74만</td><td>237개</td><td>822만</td><td>1만~1.5만회</td><td>81만</td><td>월 26개</td></tr>
+          <tr><td>Blue rain</td><td>한국</td><td>약 4년7개월</td><td>25.8만</td><td>216개</td><td>1억1,283만</td><td>1만~5.7만회</td><td>1,060만</td><td>월 4개</td></tr>
+          <tr><td>BerryMood</td><td>한국</td><td>약 13개월</td><td>7,580명</td><td>186개</td><td>24.9만</td><td>58~1,500회</td><td>1.1만</td><td>월 14개</td></tr>
+          <tr><td>seroma room</td><td>한국</td><td>약 9개월</td><td>9,820명</td><td>79개</td><td>368만</td><td>1,300~5.5만회</td><td>122만</td><td>월 9개</td></tr>
+          <tr><td>tillandtill</td><td>한국</td><td>약 9개월</td><td>6,820명</td><td>262개</td><td>264만</td><td>282~728회</td><td>34만</td><td>월 29개</td></tr>
+          <tr><td>중간광고없음</td><td>한국</td><td>약 2년5개월</td><td>1.43만</td><td>311개</td><td>531만</td><td>1.7만~3.9만회</td><td>32만</td><td>월 11개</td></tr>
+          <tr><td>URLIST</td><td>한국</td><td>약 17개월</td><td>9.57만</td><td>214개</td><td>2,878만</td><td>3천~8.3만회</td><td>243만</td><td>월 13개</td></tr>
+          <tr><td>loffea</td><td>한국</td><td>약 6개월</td><td>3,760명</td><td>46개</td><td>157만</td><td>5,200~9,900회</td><td>30만</td><td>월 8개</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="text-align:center; margin-top:24px; color:var(--text-muted); font-size:13px;">
+      ※ 실제 운영자가 매일 4~6시간 투입 (편집 + 썸네일 + 메타데이터). 코지업로더는 이 시간을 0으로.
+    </p>
+  </div>
+</section>
+
+<!-- FAQ -->
 <section id="faq">
   <div class="container">
     <h2 class="section-title">자주 묻는 질문</h2>
@@ -349,10 +675,22 @@
       <details>
         <summary>등급별 채널 / 업로드 한도는?</summary>
         <p>
-          💡 <strong>베이직</strong> — 1 채널 · 1일 1영상 (월 30개)<br>
-          🚀 <strong>프로</strong> — 6 채널 · 1일 6영상 (월 180개), 채널별 독립 설정<br>
-          👑 <strong>프리미엄</strong> — 18 채널 · 1일 18영상 (월 540개), 아이디 3개 자동 전환
+          💡 <strong>베이직</strong> — 1 채널 · 1일 1영상 (1년 365영상)<br>
+          🚀 <strong>프로</strong> — 6 채널 · 1일 6영상 (1년 2,190영상), 채널별 독립 설정<br>
+          👑 <strong>프리미엄</strong> — 18 채널 · 1일 18영상 (1년 6,570영상), 아이디 3개 자동 전환
         </p>
+      </details>
+      <details>
+        <summary>왜 "채널당 1편/일" 인가요?</summary>
+        <p>YouTube 알고리즘은 일정한 업로드 주기를 선호합니다. 채널당 1편/일 원칙을 지켜 안정적 노출과 구독자 신뢰를 확보합니다. 프로/프리미엄은 다채널로 일일 총량을 늘립니다.</p>
+      </details>
+      <details>
+        <summary>1년 라이선스가 끝나면?</summary>
+        <p>1년 라이선스 만료 후에는 월 구독료(베이직 49,000원 / 프로 198,000원 / 프리미엄 450,000원)로 계속 사용하거나, 평생사용권으로 업그레이드 가능합니다. 펀딩 구매자는 평생 펀딩 가격 보장.</p>
+      </details>
+      <details>
+        <summary>정식 출시 후 가격 인상은 왜?</summary>
+        <p>Cozy Uploader 는 현재 와디즈 한정 판매 중입니다. 정식 출시 시점에 다른 판매 채널이 오픈되면 광고비·운영비·고객 지원 인력 비용으로 1년/평생권 ×3, 월 구독료 ×2 인상됩니다. 펀딩 구매자에게는 영향 없습니다.</p>
       </details>
       <details>
         <summary>베이직은 정말 1채널만 되나요?</summary>
@@ -364,15 +702,19 @@
       </details>
       <details>
         <summary>AI 결과물(이미지/영상)의 저작권은?</summary>
-        <p>Google Gemini API 이용약관에 따라 사용자(키 발급자) 에게 있습니다. 다만 결과물이 기존 저작물과 유사할 수 있어 업로드 전 확인을 권장합니다.</p>
+        <p>Google Gemini API 이용약관에 따라 사용자(키 발급자)에게 있습니다. 다만 결과물이 기존 저작물과 유사할 수 있어 업로드 전 확인을 권장합니다.</p>
       </details>
       <details>
         <summary>업로드 음원의 저작권은?</summary>
         <p>본인 제작 또는 정당하게 라이선스 확보한 음원만 업로드 가능. 저작권 침해 책임은 업로드한 사용자에게 있습니다.</p>
       </details>
       <details>
+        <summary>해상도는 어떻게 되나요?</summary>
+        <p>디폴트는 <strong>1080p Full HD (1920×1080)</strong> 입니다. 프로/프리미엄 등급은 1440p (2K) 또는 4K UHD 도 선택 가능합니다. CPU 기반 libx264 인코딩, GPU 가속(NVENC/AMF)은 향후 업데이트 예정.</p>
+      </details>
+      <details>
         <summary>MacOS / Linux 도 되나요?</summary>
-        <p>현재 Windows 전용입니다.</p>
+        <p>현재 Windows 10/11 64bit 전용입니다. macOS / Linux / 32bit Windows / 모바일은 미지원. 사양 미충족 환경에서 발생하는 동작 불량은 환불 사유로 인정되지 않습니다.</p>
       </details>
       <details>
         <summary>환불 정책은?</summary>
