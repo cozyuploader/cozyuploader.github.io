@@ -818,17 +818,30 @@
   <div class="step">
     <div class="step-header">
       <div class="step-num">16</div>
-      <h2>테스트 사용자 저장</h2>
+      <h2>테스트 사용자 저장 → 앱 게시 (⭐ 안 하면 7일마다 끊깁니다)</h2>
     </div>
     <div class="step-body">
       <div class="step-text">
         <ol>
           <li><strong>"저장"</strong> 클릭</li>
           <li>추가된 이메일이 목록에 표시되는지 확인</li>
+          <li>같은 <span class="menu-tag">대상</span> 탭 위쪽 <strong>"게시 상태"</strong> 에서 <strong>"앱 게시"</strong> 클릭 → 확인</li>
+          <li>상태가 <strong>"프로덕션 단계"</strong> 로 바뀌면 끝</li>
         </ol>
         <div class="danger-box">
-          <strong>⛔ "앱 게시" 절대 금지.</strong><br>
-          "테스트 중" 상태 유지 → 본인/테스트 사용자만 쓸 수 있고 만료 없음. "게시" 누르면 Google 심사 필요.
+          <strong>⛔ "테스트 중" 으로 두지 마세요.</strong><br>
+          "테스트 중" 상태에서는 <strong>연결이 7일마다 자동으로 끊깁니다.</strong>
+          매주 다시 로그인해야 하고, 그 사이 예약된 업로드가 실패합니다.
+          Google 공식 문서에 명시된 동작이라 코지업로더에서는 막을 수 없습니다.
+          <strong>"앱 게시" 를 눌러 "프로덕션 단계" 로 바꿔야 안 끊깁니다.</strong>
+        </div>
+        <div class="warn-box">
+          <strong>게시해도 Google 심사는 안 받습니다.</strong><br>
+          심사 없이 바로 게시됩니다. 심사를 신청하라는 안내가 보여도 <strong>신청하지 말고 그대로 두세요.</strong><br>
+          대신 채널을 연결할 때 <strong>"이 앱은 Google에서 확인하지 않았습니다"</strong> 화면이 한 번 나옵니다.
+          <strong>"고급"</strong> → <strong>"(안전하지 않음) 이동"</strong> 을 누르면 넘어갑니다.
+          내가 만들어서 나만 쓰는 내 앱이니 정상입니다.<br>
+          <strong>"사용자 한도 100명"</strong> 은 <strong>내 프로젝트 안에서만</strong> 세는 숫자입니다. 혼자 쓰시면 신경 쓰실 필요 없습니다.
         </div>
       </div>
       <figure class="step-image">
@@ -1170,6 +1183,29 @@
       <div class="faq-q">Q. 화면이 영어로만 나와요.</div>
       <div class="faq-a">
         Google Cloud Console 우측 상단 프로필 → 설정 → 언어에서 "한국어" 로 변경 가능합니다. 영어 그대로 진행해도 단계는 동일합니다.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. "유튜브 연결 만료 — 다시 로그인 필요" 창이 자꾸 뜹니다.</div>
+      <div class="faq-a">
+        Google Cloud 프로젝트가 <strong>"테스트 중"</strong> 으로 남아 있어서입니다. 이 상태에서는 Google이 연결을 <strong>7일마다 자동으로 끊습니다.</strong>
+        코지업로더 문제가 아니라 Google 정책이라 앱에서 막을 수 없습니다.<br><br>
+        <strong>해결:</strong> Google Cloud Console →
+        <a href="https://console.cloud.google.com/auth/audience" target="_blank" rel="noopener">인증 플랫폼 → 대상</a>
+        → "게시 상태" 에서 <strong>"앱 게시"</strong> 클릭 → <strong>"프로덕션 단계"</strong> 로 바뀌었는지 확인.
+        그다음 코지업로더에서 <strong>"🔑 지금 다시 연결"</strong> 을 한 번 눌러 새로 연결하세요.
+        기존 열쇠는 "테스트 중" 때 받은 것이라 한 번은 더 만료됩니다. 새로 받은 뒤부터 안 끊깁니다.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. "앱 게시" 를 누르면 Google 심사를 받아야 하나요?</div>
+      <div class="faq-a">
+        아니요. 심사 없이 바로 게시됩니다. 심사를 신청하라는 안내가 보여도 신청하지 말고 그대로 두시면 됩니다.<br>
+        대신 채널 연결 시 "이 앱은 Google에서 확인하지 않았습니다" 화면이 한 번 나오는데,
+        <strong>"고급" → "(안전하지 않음) 이동"</strong> 을 누르면 넘어갑니다.
+        내가 만들어서 나만 쓰는 앱이라 정상입니다.
       </div>
     </div>
   </div>
