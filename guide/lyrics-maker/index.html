@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코지 가사자막생성기 사용설명서</title>
+<meta name="description" content="코지 가사자막생성기 사용설명서 — 설치, 정품 인증, 자막 만들기, 틀린 곳 고치기, 코지업로더에서 쓰기까지 한 단계씩.">
+<meta property="og:title" content="코지 가사자막생성기 사용설명서">
+<meta property="og:description" content="노래와 가사를 넣으면 노래에 맞춰 시간을 맞춘 자막을 만들어 주는 프로그램의 사용설명서입니다.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+img{max-width:100%;height:auto}
+:root{
+  --paper:#F6F7F3;
+  --card:#FFFFFF;
+  --ink:#171C18;
+  --muted:#4F5953;
+  --faint:#7D867F;
+  --rule:#DCE1D9;
+  --green:#0B7A41;
+  --green-soft:#E7F2EA;
+  --pink:#C42D74;
+  --pink-soft:#FBE9F1;
+  --red:#D3202B;
+  --amber-soft:#FFF6E0;
+  --amber:#9A6200;
+  --shadow:0 1px 2px rgba(23,28,24,.05), 0 8px 24px rgba(23,28,24,.06);
+  --serif:'Gowun Batang','Nanum Myeongjo',Georgia,serif;
+  --sans:'IBM Plex Sans KR','Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#101310; --card:#171B17; --ink:#E9EEE7; --muted:#A3ADA5; --faint:#7A837C;
+    --rule:#2A302A; --green:#4FD98D; --green-soft:#152B1E; --pink:#FF86B8; --pink-soft:#2E1622;
+    --red:#FF6B6B; --amber-soft:#2E2512; --amber:#F2C66D;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101310; --card:#171B17; --ink:#E9EEE7; --muted:#A3ADA5; --faint:#7A837C;
+  --rule:#2A302A; --green:#4FD98D; --green-soft:#152B1E; --pink:#FF86B8; --pink-soft:#2E1622;
+  --red:#FF6B6B; --amber-soft:#2E2512; --amber:#F2C66D;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:19px;line-height:1.8;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px 120px}
+
+header.top{padding:52px 0 30px;border-bottom:1px solid var(--rule)}
+.mark{font-size:14px;letter-spacing:.12em;color:var(--green);font-weight:600;margin-bottom:8px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(32px,6vw,46px);line-height:1.25;margin-bottom:16px}
+.lead{font-size:21px;color:var(--muted)}
+
+nav.toc{margin:30px 0 10px;background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:20px 22px;box-shadow:var(--shadow)}
+nav.toc p{font-weight:700;margin-bottom:8px}
+nav.toc ol{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:4px 18px}
+nav.toc a{display:block;padding:8px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+nav.toc a span{display:inline-block;min-width:1.8em;color:var(--green);font-weight:700}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--green)}
+
+section{padding-top:64px}
+.chap{font-size:15px;font-weight:700;color:var(--green);letter-spacing:.06em;margin-bottom:6px}
+h2{font-family:var(--serif);font-weight:700;font-size:clamp(27px,4.6vw,34px);line-height:1.35;margin-bottom:18px}
+h3{font-size:22px;font-weight:700;margin:38px 0 12px}
+p{margin:0 0 16px}
+strong{font-weight:700}
+a{color:var(--green)}
+.btn{display:inline-block;font-weight:700;background:var(--card);border:2px solid var(--ink);
+  border-radius:8px;padding:0 .45em;line-height:1.5;white-space:nowrap}
+
+/* 한 단계에 한 동작 */
+ol.steps{list-style:none;counter-reset:s;margin:10px 0 24px}
+ol.steps > li{counter-increment:s;position:relative;background:var(--card);border:1px solid var(--rule);
+  border-radius:12px;padding:20px 20px 20px 74px;margin-bottom:16px;box-shadow:var(--shadow)}
+ol.steps > li::before{content:counter(s);position:absolute;left:18px;top:18px;width:40px;height:40px;
+  border-radius:50%;background:var(--green);color:#fff;font-weight:700;font-size:21px;
+  display:flex;align-items:center;justify-content:center}
+:root[data-theme="dark"] ol.steps > li::before{color:#0b1a10}
+ol.steps > li > p:last-child{margin-bottom:0}
+ol.steps figure{margin:16px 0 4px}
+
+figure{margin:20px 0 26px}
+figure img{display:block;border-radius:8px;border:1px solid var(--rule);background:#fff}
+figcaption{font-size:16px;color:var(--muted);margin-top:8px;line-height:1.6}
+
+.note{border-left:5px solid var(--green);background:var(--green-soft);padding:16px 20px;margin:0 0 22px;border-radius:0 8px 8px 0}
+.note > :last-child{margin-bottom:0}
+.warn{border-left-color:var(--pink);background:var(--pink-soft)}
+.option{border:2px dashed var(--amber);background:var(--amber-soft);border-radius:10px;padding:16px 20px;margin:0 0 22px}
+.option > :last-child{margin-bottom:0}
+.option .tag{display:inline-block;font-size:15px;font-weight:700;color:var(--amber);margin-bottom:6px}
+
+.ok{font-weight:700;color:var(--green)}
+ul.plain{margin:0 0 18px 1.2em}
+ul.plain li{margin-bottom:8px}
+
+/* 파란 경고창 그림 (실제 사진 아님) */
+.ss{background:#0F5FB3;color:#fff;border-radius:6px;padding:26px 26px 22px;max-width:560px;
+  font-family:'Malgun Gothic',var(--sans);box-shadow:var(--shadow)}
+.ss h4{font-size:26px;font-weight:400;margin-bottom:14px;line-height:1.3}
+.ss p{font-size:16px;line-height:1.6;margin-bottom:12px;color:#fff}
+.ss .more{display:inline-block;text-decoration:underline;font-size:16px;padding:2px 10px;border:4px solid #FF3B3B;border-radius:40px}
+.ss .bt{display:flex;justify-content:flex-end;gap:10px;margin-top:22px;flex-wrap:wrap}
+.ss .bt span{border:2px solid #fff;padding:6px 22px;font-size:16px}
+.ss .bt .hit{outline:4px solid #FF3B3B;outline-offset:4px;border-radius:2px}
+.ss .meta{font-size:15px;opacity:.95}
+
+.faq h3{margin-top:30px}
+.contact{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:22px;box-shadow:var(--shadow)}
+footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--rule);font-size:15px;color:var(--faint)}
+
+@media (max-width:600px){
+  body{font-size:18px}
+  .lead{font-size:19px}
+  ol.steps > li{padding:62px 16px 16px 16px}
+  ol.steps > li::before{left:16px;top:14px;width:36px;height:36px;font-size:19px}
+  .ss{padding:20px 16px}
+  .ss h4{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="mark">사용설명서</p>
+  <h1>코지 가사자막생성기</h1>
+  <p class="lead">노래와 가사를 넣으면, 노래 부르는 때에 딱 맞춰 나오는 자막을 만들어 드립니다. 이 설명서는 처음 설치부터 다 만든 자막을 쓰는 데까지 한 단계씩 안내합니다.</p>
+  <p class="lead" style="font-size:17px;margin-top:10px">사진 속 <strong style="color:var(--red)">빨간 동그라미</strong>가 누를 곳입니다. 사진이 작으면 사진을 누르면 크게 보입니다.</p>
+</header>
+
+<nav class="toc" aria-label="차례">
+  <p>차례</p>
+  <ol>
+    <li><a href="#what"><span>1</span>이 프로그램이 하는 일</a></li>
+    <li><a href="#install"><span>2</span>설치하기</a></li>
+    <li><a href="#key"><span>3</span>정품 인증 (키 넣기)</a></li>
+    <li><a href="#make"><span>4</span>자막 만들기</a></li>
+    <li><a href="#fix"><span>5</span>틀린 곳 고치기</a></li>
+    <li><a href="#use"><span>6</span>만든 자막 찾기 · 코지업로더에서 쓰기</a></li>
+    <li><a href="#faq"><span>7</span>자주 묻는 것</a></li>
+    <li><a href="#contact"><span>8</span>문의하기</a></li>
+  </ol>
+</nav>
+
+<!-- ───────── 1 ───────── -->
+<section id="what">
+  <p class="chap">1장</p>
+  <h2>이 프로그램이 하는 일</h2>
+  <p>노래 파일(MP3)과 가사를 넣으면, 프로그램이 노래를 듣고 <strong>가사 한 줄 한 줄이 언제 나오고 언제 사라질지</strong> 시간을 맞춰 줍니다. 그렇게 만든 것이 <strong>자막 파일</strong>입니다.</p>
+  <ul class="plain">
+    <li><strong>수노에서 받은 MP3는 가사 파일이 없어도 됩니다.</strong> 수노 MP3 안에 가사가 이미 들어 있어서 프로그램이 알아서 꺼내 씁니다.</li>
+    <li>직접 쓴 가사를 쓰시려면, 노래와 <strong>똑같은 이름의 글 파일</strong>로 넣어 주세요. 예) <code>첫사랑.mp3</code> 와 <code>첫사랑.txt</code></li>
+    <li>한국어 노래, 영어 노래, 한국어와 영어가 섞인 노래 모두 됩니다.</li>
+    <li>프로그램이 자신 없어 하는 줄은 <strong>빨간색</strong>으로 알려 줍니다. 그 줄만 들어 보고 고치시면 됩니다.</li>
+    <li>노래 파일은 <strong>이 컴퓨터 밖으로 나가지 않습니다.</strong> 인터넷에 올리지 않고 손님 컴퓨터 안에서만 작업합니다.</li>
+  </ul>
+  <figure>
+    <a href="images/start-overview.png" target="_blank" rel="noopener"><img src="images/start-overview.png" width="1100" height="1054" alt="코지 가사자막생성기를 켜면 처음 나오는 화면. 위에서부터 1. 노래 불러오기, 2. 가사 맞추기, 3. 작업 목록 세 칸이 있다."></a>
+    <figcaption>프로그램을 켜면 나오는 첫 화면입니다. 위에서부터 <strong>1. 노래 불러오기 → 2. 가사 맞추기 → 3. 작업 목록</strong> 순서대로 쓰시면 됩니다.</figcaption>
+  </figure>
+</section>
+
+<!-- ───────── 2 ───────── -->
+<section id="install">
+  <p class="chap">2장</p>
+  <h2>설치하기</h2>
+  <p>설치 파일 받는 곳: <strong><a href="https://github.com/cozyuploader/cozy-lyrics-maker/releases/download/v1.0.1/CozyLyricsMaker-Setup-v1.0.1.exe">코지 가사자막생성기 설치파일 받기 (누르면 바로 받아집니다)</a></strong></p>
+  <ol class="steps">
+    <li><p>위 링크를 눌러 설치 파일을 내려받습니다.</p></li>
+    <li><p>내려받은 설치 파일을 <strong>두 번 누릅니다.</strong></p></li>
+    <li>
+      <p>파란 창 <strong>「Windows의 PC 보호」</strong>가 뜨면, 창 가운데의 작은 글씨 <span class="btn">추가 정보</span> 를 누릅니다.</p>
+      <div class="ss" role="img" aria-label="그림: 파란색 Windows의 PC 보호 창. 가운데 추가 정보 글씨에 빨간 동그라미.">
+        <h4>Windows의 PC 보호</h4>
+        <p>Microsoft Defender SmartScreen에서 인식할 수 없는 앱의 시작을 차단했습니다. 이 앱을 실행하면 PC가 위험에 노출될 수 있습니다.</p>
+        <span class="more">추가 정보</span>
+        <div class="bt"><span>실행 안 함</span></div>
+      </div>
+      <p style="margin-top:10px;font-size:16px;color:var(--muted)">그림입니다. 실제 창과 글자 모양이 조금 다를 수 있습니다.</p>
+    </li>
+    <li>
+      <p>아래에 <span class="btn">실행</span> 단추가 새로 나타납니다. 그것을 누릅니다.</p>
+      <div class="ss" role="img" aria-label="그림: 추가 정보를 누른 뒤의 파란 창. 아래 실행 단추에 빨간 테두리.">
+        <h4>Windows의 PC 보호</h4>
+        <p class="meta">게시자: 알 수 없는 게시자</p>
+        <div class="bt"><span class="hit">실행</span><span>실행 안 함</span></div>
+      </div>
+    </li>
+    <li><p>설치 창이 열리면 <span class="btn">다음</span> 을 눌러 넘어가다가, <span class="btn">설치</span> 를 누릅니다.</p></li>
+    <li><p>다 깔리면 <span class="btn">마침</span> 을 누릅니다. 프로그램이 저절로 켜집니다.</p></li>
+  </ol>
+  <div class="note">
+    <p><strong>파란 창이 떠도 걱정하지 않으셔도 됩니다.</strong> 작은 회사에서 만든 프로그램이라 윈도우가 처음 보는 프로그램이라고 알려 주는 것입니다. 바이러스가 있다는 뜻이 아닙니다.</p>
+    <p>바탕화면과 시작 메뉴에 <strong>「코지가사자막생성기」</strong> 바로가기가 생깁니다. 다음부터는 그것을 두 번 눌러 켜시면 됩니다.</p>
+  </div>
+</section>
+
+<!-- ───────── 3 ───────── -->
+<section id="key">
+  <p class="chap">3장</p>
+  <h2>정품 인증 (키 넣기)</h2>
+  <p>처음 켜면 <strong>「정품 인증」</strong> 창이 먼저 뜹니다. 메일로 받으신 키를 넣는 곳입니다. 키는 <code>KIT-</code> 로 시작하는 글자입니다. (예: <code>KIT-XXXX-XXXX-XXXX</code>)</p>
+  <ol class="steps">
+    <li>
+      <p>메일에 있는 키를 <strong>그대로 복사</strong>해서 ① 가운데 하얀 칸에 붙여 넣습니다. (직접 치셔도 됩니다. 대문자·소문자는 상관없습니다.)</p>
+      <figure>
+        <a href="images/license-typed.png" target="_blank" rel="noopener"><img src="images/license-typed.png" width="920" height="500" alt="정품 인증 창. 1번 키를 넣는 칸, 2번 정품 등록 단추에 빨간 동그라미."></a>
+      </figure>
+    </li>
+    <li><p>② <span class="btn">정품 등록</span> 을 누릅니다.</p></li>
+    <li><p>잠깐 뒤 창이 저절로 닫히고 프로그램이 열립니다. <span class="ok">여기까지 되면 성공입니다.</span></p></li>
+  </ol>
+  <div class="note">
+    <p><strong>인터넷이 연결되어 있어야 합니다.</strong> 키가 맞는지 인터넷으로 확인하기 때문입니다. 「서버에 연결할 수 없습니다」가 나오면 인터넷을 확인하고 다시 눌러 주세요.</p>
+    <p>키는 한 번만 넣으면 됩니다. 다음부터는 이 창이 안 뜨고 바로 켜집니다.</p>
+  </div>
+</section>
+
+<!-- ───────── 4 ───────── -->
+<section id="make">
+  <p class="chap">4장</p>
+  <h2>자막 만들기</h2>
+  <p>노래를 넣고 단추 하나만 누르면 됩니다. 한 곡이든 여러 곡이든 같습니다.</p>
+
+  <h3>노래 넣기</h3>
+  <ol class="steps">
+    <li>
+      <p>맨 위 <strong>1. 노래 불러오기</strong> 칸에서 단추를 하나 고릅니다.</p>
+      <ul class="plain">
+        <li>노래를 한두 개만 하실 때: ① <span class="btn">파일 불러오기</span></li>
+        <li>노래가 든 폴더를 통째로 하실 때: ② <span class="btn">폴더 불러오기</span></li>
+      </ul>
+      <figure>
+        <a href="images/start-load-buttons.png" target="_blank" rel="noopener"><img src="images/start-load-buttons.png" width="1100" height="190" alt="1. 노래 불러오기 칸. 1번 파일 불러오기, 2번 폴더 불러오기 단추에 빨간 동그라미."></a>
+      </figure>
+    </li>
+    <li><p>창이 열리면 노래 파일(또는 폴더)을 고르고 <span class="btn">열기</span> (폴더는 <span class="btn">폴더 선택</span>) 을 누릅니다. 파일은 여러 개를 한꺼번에 골라도 됩니다.</p></li>
+    <li>
+      <p>아래 <strong>3. 작업 목록</strong>에 노래 이름이 올라오고 <strong>「대기」</strong>라고 나오면 잘 들어간 것입니다.</p>
+      <figure>
+        <a href="images/start-loaded.png" target="_blank" rel="noopener"><img src="images/start-loaded.png" width="1100" height="660" alt="노래를 불러온 화면. 작업 목록에 잘하고 있니.mp3 가 대기 상태로 올라와 있고, 가사 맞추기 시작 단추에 빨간 동그라미와 화살표."></a>
+        <figcaption>빨간 네모 안처럼 노래가 목록에 올라오면 됩니다.</figcaption>
+      </figure>
+    </li>
+  </ol>
+
+  <h3>자막 만들기 시작</h3>
+  <ol class="steps">
+    <li><p>보라색 <span class="btn">가사 맞추기 시작</span> 을 누릅니다. (바로 위 사진의 화살표 자리입니다.)</p></li>
+    <li>
+      <p>처음 한 번은 <strong>「한 가지만 알려 드릴게요」</strong> 창이 뜹니다. <span class="btn">알겠어요, 계속할게요</span> 를 누릅니다.</p>
+      <figure>
+        <a href="images/mastering-notice.png" target="_blank" rel="noopener"><img src="images/mastering-notice.png" width="390" height="322" alt="마스터링을 하실 거면 먼저 하시는 게 좋아요 라는 안내창. 알겠어요, 계속할게요 단추에 빨간 동그라미." style="max-width:min(100%,390px)"></a>
+      </figure>
+      <p>이 창은 <strong>「마스터링(음질 다듬기)을 하실 거면 자막보다 먼저 하세요」</strong>라는 안내입니다. 「다시 보지 않기」에 표시하면 다음부터 안 뜹니다.</p>
+    </li>
+    <li>
+      <p>이제 기다리시면 됩니다. 지금 무엇을 하는지, 얼마나 남았는지 글씨와 막대로 보여 줍니다.</p>
+      <figure>
+        <a href="images/start-running.png" target="_blank" rel="noopener"><img src="images/start-running.png" width="1100" height="460" alt="가사 맞추는 중인 화면. 1곡 중 1곡째, 노래에서 목소리만 뽑는 중 36퍼센트, 남은 시간 약 5분 이라는 글씨와 보라색 막대. 작업 목록에는 진행중."></a>
+        <figcaption>위 빨간 네모: 지금 하는 일과 남은 시간. 아래 빨간 네모: 그 노래가 「진행중」.</figcaption>
+      </figure>
+    </li>
+    <li>
+      <p>다 끝나면 작업 목록의 그 노래가 <strong>「검사대기」</strong>로 바뀌고 <span class="btn">보러가기</span> 단추가 생깁니다. <span class="ok">자막은 이미 다 만들어졌습니다.</span></p>
+      <figure>
+        <a href="images/start-done.png" target="_blank" rel="noopener"><img src="images/start-done.png" width="1100" height="425" alt="작업 목록에 빨라 빨라 (Run It Up) 이 검사대기, 확인할 줄 7개로 나와 있고 보러가기 단추에 빨간 동그라미와 화살표."></a>
+        <figcaption>「확인할 줄 7개」는 프로그램이 자신 없어 하는 줄이 7개라는 뜻입니다. 5장에서 그 줄만 들어 보고 고치면 됩니다.</figcaption>
+      </figure>
+    </li>
+  </ol>
+
+  <div class="note">
+    <p><strong>곡 하나에 보통 3~5분쯤 걸립니다.</strong> 여러 곡을 넣으셨으면 컴퓨터를 켜 두고 다른 일을 하시거나 주무셔도 됩니다.</p>
+    <p><strong>중간에 꺼져도 괜찮습니다.</strong> 다시 켜서 같은 노래를 불러오고 <span class="btn">가사 맞추기 시작</span> 을 누르면 끝난 곡은 건너뛰고 이어서 합니다.</p>
+    <p>작업하는 동안 컴퓨터가 많이 느려지면, 시작하기 전에 <strong>「천천히 돌리기 (컴퓨터가 덜 느려짐)」</strong>에 표시해 두세요. 대신 시간이 조금 더 걸립니다.</p>
+  </div>
+
+  <div class="note warn">
+    <p><strong>처음 한 번은 더 오래 걸립니다.</strong> 맨 처음 자막을 만들 때 프로그램이 노래 듣는 데 필요한 자료를 인터넷에서 내려받기 때문입니다. 한국어 노래는 약 2.6GB, 영어 노래는 약 3GB, 둘 다 하시면 모두 약 4GB입니다. 인터넷이 연결된 상태에서 시작해 주세요. 한 번 받으면 그다음부터는 인터넷 없이도 됩니다.</p>
+  </div>
+
+  <h3>이럴 때는 이렇게</h3>
+  <p><strong>노래가 「건너뜀」으로 나올 때</strong> — 그 노래에 가사가 없다는 뜻입니다. 목록 오른쪽 「비고」 칸에 이유가 적혀 있습니다. 노래와 같은 이름의 가사 글 파일(<code>.txt</code>)을 같은 폴더에 넣고 다시 불러오세요.</p>
+
+  <div class="option">
+    <!-- 사장님 확인: WAV 안내는 최근에 넣는 기능. 최종판에 들어가면 이 상자를 남기고, 빠지면 상자째 지우세요. -->
+    <p class="tag">WAV 파일을 쓰시는 분만</p>
+    <p>수노에서 받은 <strong>WAV 파일에는 가사가 안 들어 있습니다.</strong> WAV만 넣으시면 「건너뜀」과 함께 아래처럼 안내가 나옵니다.</p>
+    <figure>
+      <a href="images/start-wav-only.png" target="_blank" rel="noopener"><img src="images/start-wav-only.png" width="1100" height="660" alt="WAV 파일만 넣었을 때. 작업 목록에 건너뜀, 비고에 WAV 안에는 가사가 없습니다. 같은 곡 MP3를 같이 넣거나 가사 파일(.txt)을 넣어 주세요."></a>
+    </figure>
+    <p>이럴 때는 <strong>같은 곡의 MP3를 함께 넣어 주세요.</strong> MP3로 자막을 만들고 WAV에도 같은 자막을 붙여 둡니다.</p>
+  </div>
+
+  <p><strong>「혹시 이 곡인가요?」 창이 뜰 때</strong> — 전에 자막을 만든 노래와 소리가 거의 같은 노래를 넣으셨다는 뜻입니다. 마스터링한 파일이 보통 이렇습니다.</p>
+  <figure>
+    <a href="images/maybe-same-song.png" target="_blank" rel="noopener"><img src="images/maybe-same-song.png" width="422" height="219" alt="혹시 이 곡인가요? 창. 네, 같은 곡이에요 와 아니요, 새로 만들게요 단추." style="max-width:min(100%,422px)"></a>
+  </figure>
+  <ul class="plain">
+    <li>같은 노래가 맞으면 <span class="btn">네, 같은 곡이에요</span> — 전에 만든 자막을 그대로 씁니다. 다시 만들 필요가 없어 시간이 절약됩니다.</li>
+    <li>다른 노래면 <span class="btn">아니요, 새로 만들게요</span></li>
+  </ul>
+
+  <p><strong>수노의 「목소리만 든 파일」이 있으면</strong> — 노래 옆에 <code>첫사랑 (Vocals).mp3</code> 처럼 목소리만 든 파일을 같이 두시면 곡마다 몇 분씩 빨라집니다. 없어도 괜찮습니다.</p>
+</section>
+
+<!-- ───────── 5 ───────── -->
+<section id="fix">
+  <p class="chap">5장</p>
+  <h2>틀린 곳 고치기</h2>
+  <p>프로그램이 만든 자막은 대부분 맞지만, 가끔 조금 일찍 나오거나 늦게 나오는 줄이 있습니다. 그런 줄은 <strong>빨간색</strong>으로 표시됩니다. <strong>빨간 줄만 들어 보시면 됩니다.</strong></p>
+
+  <h3>고치는 화면 열기</h3>
+  <ol class="steps">
+    <li><p>작업 목록에서 <span class="btn">보러가기</span> 를 누릅니다. (4장 마지막 사진)</p></li>
+    <li>
+      <p>잠시 「준비하고 있어요」가 나온 뒤, 아래 화면이 열립니다.</p>
+      <figure>
+        <a href="images/editor-overview.png" target="_blank" rel="noopener"><img src="images/editor-overview.png" width="1400" height="858" alt="싱크 고치는 화면 전체. 1번 틀기, 2번 다음 빨간 줄, 3번 자막이 소리와 안 맞을 때 칸, 4번 맞아요 다음 줄로, 5번 방금 한 것 취소에 빨간 표시."></a>
+        <figcaption>자주 쓰는 단추는 다섯 개뿐입니다. ① 틀기 ② 다음 빨간 줄 ③ 더 일찍 / 더 늦게 ④ 맞아요, 다음 줄로 ⑤ 방금 한 것 취소</figcaption>
+      </figure>
+    </li>
+  </ol>
+  <div class="note">
+    <p>처음 열면 <strong>「따라 해 보기」</strong> 안내가 나옵니다. 보라색 테두리가 가리키는 단추를 차례로 눌러 보면 됩니다. 필요 없으시면 <span class="btn">안내 그만 보기</span> 를 누르세요. 나중에 오른쪽 아래 <span class="btn">사용법</span> 에서 다시 볼 수 있습니다.</p>
+    <figure style="margin-bottom:0">
+      <a href="images/editor-guide.png" target="_blank" rel="noopener"><img src="images/editor-guide.png" width="760" height="920" alt="처음 열면 나오는 따라 해 보기 안내. 틀기 단추에 보라색 테두리, 먼저 노래를 들어 볼게요 라는 말풍선." style="max-width:min(100%,460px)"></a>
+    </figure>
+  </div>
+
+  <h3>빨간 줄 하나 고치기</h3>
+  <ol class="steps">
+    <li>
+      <p>오른쪽 위 <span class="btn">다음 빨간 줄 ▶</span> 을 누릅니다. 살펴볼 줄로 넘어가고, 그 줄이 저절로 한 번 들립니다.</p>
+      <figure>
+        <a href="images/editor-next-red.png" target="_blank" rel="noopener"><img src="images/editor-next-red.png" width="922" height="380" alt="다음 빨간 줄 단추에 빨간 동그라미와 화살표. 아래에 고른 줄이 보라색 테두리로 크게 펼쳐져 있다."></a>
+        <figcaption>지금 고른 줄은 보라색 테두리로 크게 펼쳐집니다.</figcaption>
+      </figure>
+    </li>
+    <li>
+      <p>왼쪽 위 화면의 자막을 보면서 노래를 들어 봅니다. 다시 듣고 싶으면 ② <span class="btn">이 줄 다시 듣기</span> 를 누릅니다.</p>
+      <figure>
+        <a href="images/editor-play.png" target="_blank" rel="noopener"><img src="images/editor-play.png" width="600" height="190" alt="1번 틀기, 2번 이 줄 다시 듣기 단추에 빨간 동그라미." style="max-width:min(100%,600px)"></a>
+      </figure>
+    </li>
+    <li>
+      <p>자막이 <strong>노래보다 늦게 나오면</strong> ① <span class="btn">◀ 더 일찍</span>, <strong>노래보다 빨리 나오면</strong> ② <span class="btn">더 늦게 ▶</span> 를 누릅니다. 한 번 누를 때마다 조금씩 움직입니다. 맞을 때까지 여러 번 누르고 들어 보세요.</p>
+      <figure>
+        <a href="images/editor-nudge.png" target="_blank" rel="noopener"><img src="images/editor-nudge.png" width="600" height="275" alt="자막 나오는 때 줄의 1번 더 일찍, 2번 더 늦게 단추에 빨간 동그라미." style="max-width:min(100%,600px)"></a>
+        <figcaption>윗줄 「자막 나오는 때」는 자막이 뜨는 때, 아랫줄 「자막 없어지는 때」는 자막이 사라지는 때입니다.</figcaption>
+      </figure>
+    </li>
+    <li>
+      <p>자막이 노래와 맞으면 <span class="btn">맞아요, 다음 줄로</span> 를 누릅니다. 빨간 표시가 없어지고 다음 빨간 줄로 넘어갑니다.</p>
+      <figure>
+        <a href="images/editor-ok.png" target="_blank" rel="noopener"><img src="images/editor-ok.png" width="600" height="275" alt="맞아요, 다음 줄로 단추에 빨간 동그라미와 화살표." style="max-width:min(100%,600px)"></a>
+        <figcaption>왼쪽 분홍 칸에 그 줄을 왜 살펴봐야 하는지 쉬운 말로 적혀 있습니다.</figcaption>
+      </figure>
+    </li>
+    <li><p>3~4번을 빨간 줄이 없어질 때까지 되풀이합니다. 위쪽에 <strong>「다 살펴봤어요」</strong>가 나오면 끝입니다. <span class="ok">창을 닫으시면 됩니다.</span></p></li>
+  </ol>
+
+  <div class="note">
+    <p><strong>저장 단추는 따로 없습니다.</strong> 단추를 누를 때마다 바로 저장됩니다. 오른쪽 아래에 「저장됨」이라고 나옵니다.</p>
+    <p><strong>잘못 눌렀으면</strong> 오른쪽 위 <span class="btn">↶ 방금 한 것 취소</span> 를 누르세요. 바로 전으로 돌아갑니다.</p>
+    <figure style="margin-bottom:0">
+      <a href="images/editor-undo.png" target="_blank" rel="noopener"><img src="images/editor-undo.png" width="922" height="120" alt="방금 한 것 취소 단추에 빨간 동그라미와 화살표."></a>
+    </figure>
+  </div>
+
+  <h3>가사 글자가 틀렸을 때</h3>
+  <ol class="steps">
+    <li>
+      <p>고칠 줄에서 <strong>「자막」 옆 글자</strong>를 마우스로 누릅니다.</p>
+      <figure>
+        <a href="images/editor-edit-text.png" target="_blank" rel="noopener"><img src="images/editor-edit-text.png" width="922" height="320" alt="고른 줄의 자막 글자 칸에 빨간 네모와 화살표."></a>
+      </figure>
+    </li>
+    <li><p>글자를 고칩니다.</p></li>
+    <li><p>키보드의 <strong>엔터</strong>를 누르면 끝납니다.</p></li>
+  </ol>
+
+  <h3>두 줄을 한 줄로 합치고 싶을 때</h3>
+  <p>고른 줄 오른쪽 아래 <span class="btn">아랫줄과 합치기</span> 를 누르면 바로 아랫줄이 이 줄에 붙습니다.</p>
+  <figure>
+    <a href="images/editor-merge.png" target="_blank" rel="noopener"><img src="images/editor-merge.png" width="922" height="320" alt="아랫줄과 합치기 단추에 빨간 동그라미와 화살표."></a>
+  </figure>
+
+  <div class="note">
+    <p><strong>노래 앞부분(전주) 길이 때문에 자막이 통째로 밀렸을 때</strong> — 화면 아래 「모든 자막을 한꺼번에」 칸에 초를 적고 <span class="btn">옮기기</span> 를 누르세요. 앞으로 당기려면 빼기(-) 숫자를 적습니다. 예) <code>-1.5</code></p>
+    <p>그 밖의 단추는 쓰지 않으셔도 자막을 만드는 데 지장이 없습니다. 단추 위에 마우스를 올려 두면 무슨 단추인지 설명이 나옵니다.</p>
+  </div>
+</section>
+
+<!-- ───────── 6 ───────── -->
+<section id="use">
+  <p class="chap">6장</p>
+  <h2>만든 자막 찾기 · 코지업로더에서 쓰기</h2>
+
+  <h3>만든 자막이 있는 곳</h3>
+  <p>자막은 노래 옆이 아니라 <strong>「내 문서」 안의 「코지 가사자막생성기」 → 「결과」 폴더</strong>에 모입니다.</p>
+  <ol class="steps">
+    <li>
+      <p>첫 화면 아래 ① <span class="btn">결과 폴더 열기</span> 를 누르면 그 폴더가 바로 열립니다.</p>
+      <figure>
+        <a href="images/start-result-folder.png" target="_blank" rel="noopener"><img src="images/start-result-folder.png" width="1100" height="425" alt="1번 결과 폴더 열기 단추에 빨간 동그라미, 2번 만든 자막이 쌓이는 곳 글씨에 빨간 네모."></a>
+        <figcaption>② 「만든 자막이 쌓이는 곳」에 폴더 자리가 늘 적혀 있습니다. 「사용자」 자리에는 손님 컴퓨터의 이름이 나옵니다.</figcaption>
+      </figure>
+    </li>
+  </ol>
+  <p>폴더 안에는 노래마다 이런 파일이 생깁니다. 예) 노래 이름이 「첫사랑」이면</p>
+  <ul class="plain">
+    <li><code>첫사랑.srt</code> — <strong>자막 파일</strong>. 영상 편집 프로그램이나 유튜브에 올리는 자막은 이것을 쓰시면 됩니다.</li>
+    <li><code>첫사랑.lrc</code> — 음악 재생기에서 가사가 따라 나오게 하는 파일</li>
+    <li>그 밖의 파일(<code>.json</code> 등)과 <code>_작업중</code> 폴더 — 프로그램이 쓰는 것입니다. <strong>지우거나 옮기지 마세요.</strong> 지우면 고치는 화면을 다시 열 수 없고, 코지업로더가 자막을 못 찾습니다.</li>
+  </ul>
+  <div class="note">
+    <p>모으는 폴더를 바꾸고 싶으시면 첫 화면 아래 <span class="btn">저장 자리 바꾸기</span> 를 누르세요. 전에 만든 자막도 같이 옮길지 물어봅니다. 옮기시려면 <span class="btn">Yes</span> 를 누르세요.</p>
+  </div>
+
+  <h3>코지업로더 영상에 가사 넣기</h3>
+  <div class="option">
+    <!-- 사장님 확인: 지금 손님께 나간 코지업로더(2.1.1)에는 가사 자막 칸이 아직 없습니다(master 에만 있음). 그 판이 나간 뒤에 이 상자를 살리세요. -->
+    <p class="tag">코지업로더를 같이 쓰시는 분만</p>
+    <p>코지업로더가 위 「결과」 폴더를 들여다보고, 영상에 들어가는 노래마다 <strong>맞는 자막을 알아서 찾아 붙입니다.</strong> 노래 파일을 옮기실 필요는 없습니다.</p>
+    <p>코지업로더 <strong>설정 탭에 「가사 자막」 칸이 보이지 않으면</strong> 코지업로더를 새 판으로 업데이트해 주세요.</p>
+    <ol class="steps">
+      <li><p>코지업로더를 켜고 <strong>[설정]</strong> 탭으로 갑니다.</p></li>
+      <li><p><strong>「가사 자막」</strong> 칸에서 <span class="btn">폴더 고르기</span> 를 누릅니다.</p></li>
+      <li><p>가사자막생성기의 <strong>「결과」 폴더</strong>를 고릅니다. (내 문서 → 코지 가사자막생성기 → 결과) 컴퓨터에서 한 번만 하시면 됩니다.</p></li>
+      <li><p>채널의 <strong>[초기세팅]</strong> 화면을 열고 <span class="btn">가사 자막</span> 단추를 누릅니다.</p></li>
+      <li><p><strong>「이 채널 영상에 노래 가사 넣기」</strong>에 표시합니다.</p></li>
+      <li><p>글자가 나오는 방법을 고릅니다. <strong>「노래방처럼 차오르기」</strong> 또는 <strong>「그냥 시간 맞춰 나오기」</strong>. 그리고 <span class="btn">확인</span> 을 누릅니다.</p></li>
+      <li><p>화면의 「가사」 네모를 끌어서 자리를 정하고 저장합니다. 이제 이 채널 영상에 가사가 들어갑니다.</p></li>
+    </ol>
+    <p>자막이 없는 노래는 그냥 가사 없이 넘어갑니다. 영상을 만들기 <strong>전에</strong> 가사자막생성기로 자막을 먼저 만들어 두세요.</p>
+  </div>
+  <div class="note warn">
+    <p><strong>마스터링은 자막보다 먼저 해 주세요.</strong> 자막을 만든 뒤에 마스터링을 하면 파일이 바뀌어서 코지업로더가 그 노래인 줄 못 알아볼 수 있습니다. 그런 경우 가사자막생성기에 마스터링한 파일을 넣으시면 「혹시 이 곡인가요?」 하고 물어봅니다. <span class="btn">네, 같은 곡이에요</span> 를 누르면 다시 이어집니다.</p>
+    <p>자막 글자나 시간을 고치는 것은 <strong>가사자막생성기에서만</strong> 합니다. 코지업로더에서는 글씨 모양과 자리만 정합니다.</p>
+  </div>
+</section>
+
+<!-- ───────── 7 ───────── -->
+<section id="faq" class="faq">
+  <p class="chap">7장</p>
+  <h2>자주 묻는 것</h2>
+
+  <h3>시간이 얼마나 걸리나요?</h3>
+  <p><strong>곡 하나에 보통 3~5분</strong>입니다. 빠른 컴퓨터에서 3분 42초짜리 노래가 약 2분 걸렸습니다. 오래된 컴퓨터는 더 걸릴 수 있습니다. 진행 막대 옆에 「남은 시간 약 ○분」이 나오니 그것을 보시면 됩니다.</p>
+  <p><strong>맨 처음 한 번</strong>은 필요한 자료(한국어 약 2.6GB)를 내려받느라 인터넷 속도에 따라 더 걸립니다.</p>
+
+  <h3>오래 걸리는데 멈춘 건가요?</h3>
+  <p>막대 위 글씨(「노래에서 목소리만 뽑는 중 36%」 같은 것)가 조금씩 바뀌고 있으면 일하는 중입니다. 그대로 두세요. 끄셨더라도 다시 시작하면 이어서 합니다.</p>
+
+  <h3>다른 컴퓨터에서도 쓸 수 있나요?</h3>
+  <p><strong>키 하나로 컴퓨터 2대까지</strong> 쓸 수 있습니다. 다른 컴퓨터에도 설치하고 같은 키를 넣으시면 됩니다. 3대째는 키가 등록되지 않습니다. 컴퓨터를 바꾸셔서 옛 컴퓨터를 빼야 할 때는 문의처로 연락 주세요.</p>
+
+  <h3>1년권은 언제부터 1년인가요?</h3>
+  <p><strong>키를 처음 넣은 날부터 1년</strong>입니다. 산 날이 아니라 정품 등록을 누른 날부터 셉니다. (평생권은 기간이 없습니다.)</p>
+  <p>1년권은 첫 화면 왼쪽 아래에 남은 날짜가 나옵니다.</p>
+  <figure>
+    <a href="images/year-days-left.png" target="_blank" rel="noopener"><img src="images/year-days-left.png" width="1100" height="174" alt="첫 화면 왼쪽 아래 사용 기간 340일 남음 글씨에 빨간 동그라미."></a>
+    <figcaption>30일보다 적게 남으면 주황색으로 「연장은 구매처에 문의해 주세요」가 같이 나옵니다.</figcaption>
+  </figure>
+  <p>기간이 끝나면 프로그램을 켤 때 「사용 기간이 끝났습니다」가 나옵니다. <strong>만들어 둔 자막 파일은 그대로 남아 있습니다.</strong></p>
+
+  <h3>인터넷이 없어도 되나요?</h3>
+  <p>처음 키를 넣을 때와 첫 곡을 만들 때는 인터넷이 필요합니다. 그다음에는 인터넷 없이도 됩니다. 다만 며칠에 한 번 키를 다시 확인하므로, <strong>2주 넘게 인터넷을 끊어 두시면</strong> 한 번 연결해 달라고 나올 수 있습니다.</p>
+
+  <h3>자막이 하나도 안 맞아요</h3>
+  <p>가사 글 파일의 줄과 실제 노래가 다르면 잘 안 맞습니다. 가사 파일에 <strong>노래에서 부르는 가사만, 부르는 순서대로</strong> 넣어 주세요. 빈 줄과 <code>[Verse]</code>, <code>[후렴]</code> 같은 대괄호 표시는 프로그램이 알아서 건너뜁니다.</p>
+
+  <h3>새 판(업데이트)은 어떻게 받나요?</h3>
+  <p>새 판이 나오면 프로그램을 켤 때 「새 버전이 나왔어요」 창이 뜹니다. <span class="btn">Yes</span> 를 누르면 알아서 받아 깔립니다. (단추가 영어로 「Yes」라고 나옵니다. 「예」라는 뜻입니다.) 첫 화면 오른쪽 아래 <span class="btn">새 버전 확인</span> 으로 직접 확인하실 수도 있습니다.</p>
+</section>
+
+<!-- ───────── 8 ───────── -->
+<section id="contact">
+  <p class="chap">8장</p>
+  <h2>문의하기</h2>
+  <div class="contact">
+    <p>잘 안 되시거나 궁금한 점은 아래로 연락 주세요.</p>
+    <p><strong>이 메일(cozy_uploader@naver.com)로 보내 주시거나, 받으신 안내 메일에 답장해 주세요</strong></p>
+    <p style="margin-bottom:0">연락 주실 때 <strong>화면 사진</strong>을 같이 보내 주시면 훨씬 빨리 도와드릴 수 있습니다. 「도중에 멈췄습니다」가 나왔으면 그 아래 글상자 내용도 같이 보내 주세요.</p>
+  </div>
+</section>
+
+<footer>코지 가사자막생성기 사용설명서</footer>
+</div>
+</body>
+</html>
