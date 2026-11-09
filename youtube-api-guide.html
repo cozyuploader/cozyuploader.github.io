@@ -825,9 +825,20 @@
         <ol>
           <li><strong>"저장"</strong> 클릭</li>
           <li>추가된 이메일이 목록에 표시되는지 확인</li>
-          <li>같은 <span class="menu-tag">대상</span> 탭 위쪽 <strong>"게시 상태"</strong> 에서 <strong>"앱 게시"</strong> 클릭 → 확인</li>
+          <li>왼쪽 메뉴 <span class="menu-tag">브랜딩</span> 클릭 → 아래쪽 <strong>"앱 도메인"</strong> 칸 3개에 아래 주소를 그대로 복사해 넣기<br>
+            · 애플리케이션 홈페이지: <code>https://cozyuploader.github.io/</code><br>
+            · 개인정보처리방침 링크: <code>https://cozyuploader.github.io/privacy_policy_ko.html</code><br>
+            · 서비스 약관 링크: <code>https://cozyuploader.github.io/terms_of_service_ko.html</code></li>
+          <li>바로 아래 <strong>"승인된 도메인"</strong> 에서 <strong>"+ 도메인 추가"</strong> 클릭 → <code>cozyuploader.github.io</code> 입력</li>
+          <li>맨 아래 <strong>"저장"</strong> 클릭 (로고는 넣지 마세요. 넣으면 심사를 받아야 합니다)</li>
+          <li>왼쪽 메뉴 <span class="menu-tag">대상</span> 으로 돌아와 위쪽 <strong>"게시 상태"</strong> 에서 <strong>"앱 게시"</strong> 클릭 → <strong>"확인"</strong></li>
           <li>상태가 <strong>"프로덕션 단계"</strong> 로 바뀌면 끝</li>
         </ol>
+        <div class="warn-box">
+          <strong>"앱 게시" 가 회색이라 안 눌리면</strong><br>
+          "앱을 게시하려면 브랜딩 페이지에서 구성을 완료해야 합니다" 라고 나옵니다.
+          위 4~6번(브랜딩 주소 3개 + 승인된 도메인 + 저장)을 하시면 바로 눌립니다.
+        </div>
         <div class="danger-box">
           <strong>⛔ "테스트 중" 으로 두지 마세요.</strong><br>
           "테스트 중" 상태에서는 <strong>연결이 7일마다 자동으로 끊깁니다.</strong>
@@ -1194,6 +1205,7 @@
         <strong>해결:</strong> Google Cloud Console →
         <a href="https://console.cloud.google.com/auth/audience" target="_blank" rel="noopener">인증 플랫폼 → 대상</a>
         → "게시 상태" 에서 <strong>"앱 게시"</strong> 클릭 → <strong>"프로덕션 단계"</strong> 로 바뀌었는지 확인.
+        "앱 게시" 가 회색이라 안 눌리면, 먼저 위 <strong>16단계의 브랜딩 주소 넣기</strong>를 하세요.
         그다음 코지업로더에서 <strong>"🔑 지금 다시 연결"</strong> 을 한 번 눌러 새로 연결하세요.
         기존 열쇠는 "테스트 중" 때 받은 것이라 한 번은 더 만료됩니다. 새로 받은 뒤부터 안 끊깁니다.
       </div>
