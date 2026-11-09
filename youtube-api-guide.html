@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YouTube API 등록 가이드 - Cozy Uploader</title>
-<meta name="description" content="Cozy Uploader 에 본인 YouTube 채널을 연결하기 위한 단계별 가이드 (스크린샷 27장).">
+<meta name="description" content="Cozy Uploader 에 본인 YouTube 채널을 연결하기 위한 단계별 가이드 (스크린샷 29장).">
 <meta property="og:title" content="YouTube API 등록 가이드 - Cozy Uploader">
-<meta property="og:description" content="본인 YouTube 채널 연결 7~10분 가이드 (스크린샷 27장)">
+<meta property="og:description" content="본인 YouTube 채널 연결 7~10분 가이드 (스크린샷 29장)">
 <meta property="og:type" content="article">
 <style>
   :root {
@@ -478,13 +478,13 @@
     <div class="step-body">
       <div class="step-text">
         <ol>
-          <li><strong>프로젝트 이름</strong>: 원하는 이름 입력 (예: <code>my-cozy-uploader</code>)</li>
-          <li>위치(조직)는 그대로 두기 (없음)</li>
+          <li><strong>프로젝트 이름</strong>: 영문으로 원하는 이름 입력 (예: <code>my-cozy-uploader</code>)</li>
+          <li><strong>상위 리소스</strong>는 그대로 두기 (조직 없음)</li>
           <li>아래 <strong>"만들기"</strong> 버튼 클릭</li>
           <li>몇 초 후 "프로젝트 생성됨" 알림이 뜸</li>
         </ol>
         <div class="callout">
-          <strong>💡 프로젝트 이름은 본인이 알아볼 수 있는 어떤 이름이든 OK.</strong> 영문/숫자/하이픈만 사용 가능.
+          <strong>💡 프로젝트 이름은 본인이 알아볼 수 있는 어떤 이름이든 OK.</strong> 단 <strong>한글은 안 됩니다.</strong> 사진처럼 한글로 쓰면 "이름에 잘못된 문자가 포함되어 있습니다" 빨간 글씨가 뜹니다. 영문·숫자·하이픈(-)으로 쓰세요.
         </div>
       </div>
       <figure class="step-image">
@@ -495,7 +495,7 @@
           <div>프로젝트 이름 입력</div>
           <div class="ph-note">images/guide/step04-create-project.png</div>
         </div>
-        <div class="caption">이름 입력 → "만들기"</div>
+        <div class="caption">한글 이름은 빨간 오류 → 영문으로 입력 → "만들기"</div>
       </figure>
     </div>
   </div>
@@ -596,8 +596,8 @@
       <div class="step-text">
         <ol>
           <li>API 라이브러리 화면 상단 검색창 찾기</li>
-          <li>검색창에 <code>YouTube Data API v3</code> 입력</li>
-          <li>아래에 검색 결과로 <strong>YouTube Data API v3</strong> 카드가 표시됨</li>
+          <li>검색창에 <code>YouTube Data API v3</code> 입력 후 <strong>Enter</strong></li>
+          <li>Enter 를 눌러야 검색 결과가 나옵니다 (다음 사진)</li>
         </ol>
       </div>
       <figure class="step-image">
@@ -711,6 +711,7 @@
           <li>하위 메뉴 <strong>"OAuth 동의 화면"</strong> 클릭</li>
           <li>"Google 인증 플랫폼이 아직 구성되지 않음" 안내 화면이 나오면 정상 진입</li>
         </ol>
+        <div class="warn-box">사진마다 위쪽 프로젝트 이름(My First Project 등)이 다를 수 있습니다. 사진은 예시입니다. <strong>내 화면 맨 위에는 5단계에서 고른 내 프로젝트 이름</strong>이 보여야 합니다.</div>
       </div>
       <figure class="step-image">
         <img src="images/guide/step12-consent-entry.jpg" alt="OAuth 동의 화면 진입"
@@ -763,10 +764,11 @@
           <li><strong>앱 이름</strong>: <code>My Cozy Uploader</code> 입력
             <ul><li>⚠️ "Google" / "YouTube" 같은 단어 사용 금지</li></ul>
           </li>
-          <li><strong>사용자 지원 이메일</strong>: 본인 이메일 선택</li>
-          <li><strong>대상</strong>: <strong>"외부(External)"</strong> 선택</li>
-          <li><strong>연락처 이메일</strong>: 본인 이메일 입력</li>
-          <li>약관 체크 → <strong>"만들기"</strong> 클릭</li>
+          <li><strong>사용자 지원 이메일</strong>: 본인 이메일 선택 → <strong>"다음"</strong></li>
+          <li><strong>대상</strong>: <strong>"외부"</strong> 선택 → <strong>"다음"</strong></li>
+          <li><strong>연락처 정보</strong>: 본인 이메일을 <strong>@gmail.com 까지 전부</strong> 입력 → <strong>"다음"</strong>
+            <ul><li>사진처럼 아이디만 쓰면 "이메일을 1개 이상 입력하세요" 빨간 글씨가 뜹니다</li></ul></li>
+          <li><strong>완료</strong>: "사용자 데이터 정책에 동의합니다" 체크 → <strong>"계속"</strong> → 맨 아래 <strong>"만들기"</strong> 클릭</li>
         </ol>
       </div>
       <figure class="step-image">
@@ -795,7 +797,7 @@
         </p>
         <ol>
           <li>왼쪽 메뉴 <span class="menu-tag">대상</span> 탭 클릭</li>
-          <li>"테스트 사용자" 섹션의 <strong>"+ 사용자 추가"</strong> 클릭</li>
+          <li>아래쪽 "테스트 사용자" 의 <strong>"+ Add users"</strong> 클릭 (화면에 따라 "+ 사용자 추가" 로 보일 수 있음)</li>
           <li>본인 Google 이메일 입력 (YouTube 채널 소유 계정)
             <ul><li>여러 채널이면 각 채널 소유 이메일 모두 추가</li></ul>
           </li>
@@ -809,7 +811,7 @@
           <div>대상 탭 → 테스트 사용자 추가</div>
           <div class="ph-note">images/guide/step15-test-users.jpg</div>
         </div>
-        <div class="caption">대상 탭 → "+ 사용자 추가"</div>
+        <div class="caption">대상 탭 → "+ Add users"</div>
       </figure>
     </div>
   </div>
@@ -899,7 +901,7 @@
           <strong>게시해도 Google 심사는 안 받습니다.</strong><br>
           심사 없이 바로 게시됩니다. 심사를 신청하라는 안내가 보여도 <strong>신청하지 말고 그대로 두세요.</strong><br>
           대신 채널을 연결할 때 <strong>"이 앱은 Google에서 확인하지 않았습니다"</strong> 화면이 한 번 나옵니다.
-          <strong>"고급"</strong> → <strong>"(안전하지 않음) 이동"</strong> 을 누르면 넘어갑니다.
+          <strong>"계속"</strong> (또는 <strong>"고급"</strong> → <strong>"(안전하지 않음) 이동"</strong>) 을 누르면 넘어갑니다 (24단계).
           내가 만들어서 나만 쓰는 내 앱이니 정상입니다.<br>
           <strong>"사용자 한도 100명"</strong> 은 <strong>내 프로젝트 안에서만</strong> 세는 숫자입니다. 혼자 쓰시면 신경 쓰실 필요 없습니다.
         </div>
@@ -1006,7 +1008,8 @@
     <div class="step-body">
       <div class="step-text">
         <ol>
-          <li>생성 완료 팝업에서 <strong>"JSON 다운로드"</strong> 클릭</li>
+          <li>"OAuth 클라이언트 생성됨" 창에서 <strong>"JSON 다운로드"</strong> 클릭</li>
+          <li>⚠️ <strong>"확인"을 누르기 전에</strong> 다운로드하세요. 창을 닫으면 다시 받을 수 없습니다 (사진의 노란 안내)</li>
           <li><code>client_secret_xxxx.apps.googleusercontent.com.json</code> 파일 저장</li>
         </ol>
         <div class="callout">
@@ -1037,9 +1040,9 @@
         <ol>
           <li>Cozy Uploader 앱 실행 → 로그인</li>
           <li>왼쪽 사이드바 → <strong>"설정"</strong> 탭</li>
-          <li>스크롤 → <strong>"YouTube API 인증 파일"</strong> 항목</li>
-          <li><strong>"파일 등록"</strong> 클릭 → 다운로드한 JSON 선택</li>
-          <li>"등록 완료" 메시지 확인</li>
+          <li>아래로 내려 <strong>「API 설정」</strong> 칸 안의 <strong>"YOUTUBE API 인증 파일"</strong> 항목</li>
+          <li>초록색 <strong>"파일 등록"</strong> 클릭 → 20단계에서 받은 JSON 선택</li>
+          <li>"YouTube API 인증 파일이 등록되었습니다" 창이 뜨면 <strong>"OK"</strong></li>
         </ol>
       </div>
       <figure class="step-image">
@@ -1050,7 +1053,7 @@
           <div>Cozy 설정 → YouTube API 인증 파일 등록</div>
           <div class="ph-note">images/guide/step21-register-in-cozy.jpg</div>
         </div>
-        <div class="caption">설정 탭 → 파일 등록</div>
+        <div class="caption">설정 → 「API 설정」 → 초록색 "파일 등록"</div>
       </figure>
     </div>
   </div>
@@ -1064,7 +1067,7 @@
     <div class="step-body">
       <div class="step-text">
         <ol>
-          <li>설정 탭 → <strong>"YouTube 채널 → 계정 연결"</strong> 버튼 클릭</li>
+          <li>같은 「API 설정」 칸, 조금 위의 <strong>"YOUTUBE 채널"</strong> 항목에서 <strong>"계정 연결"</strong> 클릭</li>
           <li>기본 브라우저가 자동으로 열림</li>
         </ol>
       </div>
@@ -1076,7 +1079,7 @@
           <div>YouTube 채널 → 계정 연결</div>
           <div class="ph-note">images/guide/step22-connect-account.jpg</div>
         </div>
-        <div class="caption">계정 연결 버튼 → 브라우저 자동 열림</div>
+        <div class="caption">"YOUTUBE 채널" → "계정 연결" → 브라우저가 열림</div>
       </figure>
     </div>
   </div>
@@ -1090,9 +1093,10 @@
     <div class="step-body">
       <div class="step-text">
         <ol>
-          <li>브라우저에서 <strong>본인 Google 계정</strong> 선택</li>
-          <li>YouTube 채널 소유 계정으로 로그인</li>
-          <li>여러 계정이 있으면 채널 소유 계정만 선택</li>
+          <li>브라우저에 <strong>"계정 또는 브랜드 계정 선택"</strong> 화면이 나옵니다</li>
+          <li><strong>연결할 유튜브 채널</strong>을 고르세요
+            <ul><li>채널이 브랜드 계정이면 내 구글 계정 아래에 <strong>채널 이름이 따로</strong> 보입니다 → 그 채널 이름을 고르기 (사진의 빨간 칸)</li>
+            <li>채널이 하나뿐이고 따로 안 보이면 내 구글 계정을 고르면 됩니다</li></ul></li>
         </ol>
       </div>
       <figure class="step-image">
@@ -1103,7 +1107,7 @@
           <div>Google 계정 선택 화면</div>
           <div class="ph-note">images/guide/step23-select-account.jpg</div>
         </div>
-        <div class="caption">YouTube 채널 소유 계정 선택</div>
+        <div class="caption">연결할 채널(브랜드 계정) 이름 선택</div>
       </figure>
     </div>
   </div>
@@ -1112,27 +1116,29 @@
   <div class="step">
     <div class="step-header">
       <div class="step-num">24</div>
-      <h2>"확인되지 않은 앱" 경고 — 고급 클릭</h2>
+      <h2>"Google에서 확인하지 않은 앱" 경고 넘기기</h2>
     </div>
     <div class="step-body">
       <div class="step-text">
-        <p>OAuth 로그인 시 <strong>"Google에서 이 앱을 확인하지 않았습니다"</strong> 경고가 뜹니다. 본인 프로젝트이므로 안전합니다.</p>
+        <p>계정을 고르면 <strong>"Google에서 확인하지 않은 앱"</strong> 경고가 뜹니다. 내가 만든 내 앱이라 안전합니다.</p>
         <ol>
-          <li>경고 화면 → <strong>"고급"</strong> 또는 <strong>"Advanced"</strong> 링크 클릭</li>
+          <li>사진처럼 <strong>"계속"</strong> 버튼이 보이면 → <strong>"계속"</strong> 클릭 (파란 "안전한 환경으로 돌아가기" 아님)</li>
+          <li><strong>"계속"</strong> 대신 <strong>"고급"</strong> 글자만 보이면 → <strong>"고급"</strong> 클릭 → 아래에 펼쳐지는 <strong>"(앱 이름)(안전하지 않음)(으)로 이동"</strong> 클릭</li>
         </ol>
         <div class="warn-box">
-          <strong>경고가 뜨는 이유:</strong> 본인이 만든 앱을 Google 심사받지 않았기 때문. 본인 프로젝트에서 본인 계정 로그인은 안전합니다.
+          <strong>화면이 두 가지인 이유:</strong> 구글이 상황에 따라 경고 화면을 다르게 보여 줍니다. 어느 쪽이든 위 방법으로 넘어가면 됩니다.
+          경고는 내 앱을 구글 심사에 안 냈기 때문에 뜨는 것이고, 내 프로젝트에 내 계정으로 들어가는 것이라 안전합니다.
         </div>
       </div>
       <figure class="step-image">
-        <img src="images/guide/step24-continue.jpg" alt="고급 링크 클릭"
+        <img src="images/guide/step24-continue.jpg" alt="확인하지 않은 앱 경고 - 계속"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="img-placeholder" style="display:none;">
           <div class="ph-icon">🖼️</div>
-          <div>"고급" 또는 "Advanced" 클릭</div>
+          <div>경고 화면 → "계속"</div>
           <div class="ph-note">images/guide/step24-continue.jpg</div>
         </div>
-        <div class="caption">경고 → "고급" 클릭</div>
+        <div class="caption">경고 화면 → 왼쪽 "계속" 클릭</div>
       </figure>
     </div>
   </div>
@@ -1141,23 +1147,25 @@
   <div class="step">
     <div class="step-header">
       <div class="step-num">25</div>
-      <h2>"(앱 이름)으로 이동" 클릭</h2>
+      <h2>"(앱 이름) 서비스로 로그인" → 계속</h2>
     </div>
     <div class="step-body">
       <div class="step-text">
         <ol>
-          <li>고급 펼침 영역 → 하단 <strong>"(앱 이름)(안전하지 않음)(으)로 이동"</strong> 클릭</li>
+          <li><strong>"(14단계에서 정한 앱 이름) 서비스로 로그인"</strong> 화면이 나옵니다</li>
+          <li>왼쪽에 보이는 계정이 <strong>유튜브 채널 계정</strong>인지 확인</li>
+          <li>오른쪽 아래 <strong>"계속"</strong> 클릭</li>
         </ol>
       </div>
       <figure class="step-image">
-        <img src="images/guide/step25-advanced.jpg" alt="앱으로 이동"
+        <img src="images/guide/step25-advanced.jpg" alt="앱 이름 서비스로 로그인 - 계속"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="img-placeholder" style="display:none;">
           <div class="ph-icon">🖼️</div>
-          <div>"(앱 이름)(안전하지 않음)으로 이동"</div>
+          <div>(앱 이름) 서비스로 로그인 → 계속</div>
           <div class="ph-note">images/guide/step25-advanced.jpg</div>
         </div>
-        <div class="caption">고급 펼치기 → 앱으로 이동</div>
+        <div class="caption">계정 확인 → 오른쪽 아래 "계속"</div>
       </figure>
     </div>
   </div>
@@ -1187,7 +1195,7 @@
           <div>모든 권한 체크 → 허용</div>
           <div class="ph-note">images/guide/step26-allow-all.jpg</div>
         </div>
-        <div class="caption">⭐ 모든 권한 체크 후 허용</div>
+        <div class="caption">⭐ "모두 선택" 체크 → 오른쪽 아래 "계속"</div>
       </figure>
     </div>
   </div>
@@ -1201,7 +1209,7 @@
     <div class="step-body">
       <div class="step-text">
         <ol>
-          <li>"<strong>인증 완료! 탭을 닫으세요</strong>" 메시지 확인</li>
+          <li>"<strong>인증 완료! 이 탭을 닫고 앱으로 돌아가세요.</strong>" 메시지 확인</li>
           <li>브라우저 탭 닫기</li>
           <li>Cozy Uploader 앱으로 돌아가서 <strong>채널 이름이 표시되는지 확인</strong></li>
         </ol>
@@ -1266,7 +1274,7 @@
       <div class="faq-a">
         아니요. 심사 없이 바로 게시됩니다. 심사를 신청하라는 안내가 보여도 신청하지 말고 그대로 두시면 됩니다.<br>
         대신 채널 연결 시 "이 앱은 Google에서 확인하지 않았습니다" 화면이 한 번 나오는데,
-        <strong>"고급" → "(안전하지 않음) 이동"</strong> 을 누르면 넘어갑니다.
+        <strong>"계속"</strong> (또는 <strong>"고급" → "(안전하지 않음) 이동"</strong>) 을 누르면 넘어갑니다 (24단계).
         내가 만들어서 나만 쓰는 앱이라 정상입니다.
       </div>
     </div>
