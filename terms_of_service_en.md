@@ -1,6 +1,6 @@
 # Cozy Uploader — Terms of Service
 
-**Last Updated: 2026-04-15**
+**Last Updated: 2026-11-10** (refund policy; see Korean version for full history)
 
 > ⚠ **This English translation is out of date.** The Korean terms
 > (`terms_of_service_ko`) were revised on 2026-08-12 and 2026-08-15 and are the
@@ -47,11 +47,13 @@ These Terms outline baseline rules for all features of the App. By installing an
 ## 6. Refund Policy
 
 1. **Wadiz-based refunds** follow Wadiz's policy (see https://www.wadiz.kr).
-2. Direct-purchase refunds:
-   - **License key unreceived / unactivated**: Full refund within **14 days** of payment.
-   - **After activation**: Refund possible within **7 days of payment**, provided **under 10% of the total period has been used**.
-   - **After substantial use**: Refunds generally not available.
-3. Refund requests: `cozy_uploader@naver.com`.
+2. Direct purchases (website, etc.):
+   - **Before the License key is issued**: Full refund.
+   - **After the License key is issued**: **No refund.** The App is copyable digital content; issuing the key counts as the start of supply under Article 17(2)(5) of the Korean Act on Consumer Protection in Electronic Commerce. This applies regardless of plan length or usage.
+3. This is shown on the payment screen before purchase. The user manual is available before purchase.
+4. Refunds are still given if the App differs from what was advertised or contracted (Article 17(3)), or cannot be used normally due to our fault.
+5. Refund requests: `cozy_uploader@naver.com`.
+6. Applies to payments made on or after **2026-11-17**. Earlier payments follow the terms in effect at the time of payment. The Korean version prevails.
 
 ## 7. User Obligations
 
