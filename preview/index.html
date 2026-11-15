@@ -38,13 +38,20 @@ nav .btn{padding:10px 18px;font-size:13px}
 .arr{width:16px;height:16px}
 
 /* 스크롤 장면 */
-.scrolly{position:relative;height:520vh}
+.scrolly{position:relative;height:640vh}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 #seq{position:absolute;inset:0;width:100%;height:100%}
 .shade{position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(90deg,rgba(7,6,5,.88) 0%,rgba(7,6,5,.55) 34%,rgba(7,6,5,0) 62%),
              linear-gradient(0deg,rgba(7,6,5,.75) 0%,rgba(7,6,5,0) 30%),
              linear-gradient(180deg,rgba(7,6,5,.6) 0%,rgba(7,6,5,0) 18%)}
+.prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:50;background:linear-gradient(90deg,var(--amber),var(--amber2));
+  box-shadow:0 0 12px rgba(245,165,36,.6)}
+.hint{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;color:var(--ink);opacity:.9;transition:opacity .4s;pointer-events:none}
+.hint svg{width:22px;height:22px;animation:bob 1.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+.hint.off{opacity:0}
 .loader{position:absolute;left:clamp(16px,6vw,96px);bottom:28px;font-size:12px;letter-spacing:.2em;color:var(--dim)}
 
 .panel{position:absolute;left:clamp(16px,6vw,96px);top:50%;transform:translateY(-50%);max-width:min(720px,52vw);
@@ -110,22 +117,38 @@ footer{padding:30px clamp(16px,6vw,96px) 44px;color:var(--dim);font-size:12.5px;
 footer a{color:var(--mute)}
 
 @media (max-width:860px){
+  .grain{display:none}
+  nav{padding:14px 16px;background:linear-gradient(180deg,rgba(7,6,5,.85),rgba(7,6,5,0))}
   .nav-r a.t{display:none}
-  .shade{background:linear-gradient(0deg,rgba(7,6,5,.95) 0%,rgba(7,6,5,.7) 40%,rgba(7,6,5,0) 64%),
-                    linear-gradient(180deg,rgba(7,6,5,.6) 0%,rgba(7,6,5,0) 18%)}
-  .panel{top:auto;bottom:max(34px,env(safe-area-inset-bottom));transform:none;right:16px;left:16px;max-width:none}
-  .ai,.up{left:16px;right:16px;width:auto;top:84px;transform:none}
-  .ai .meta{display:none}
-  .up .sched{display:none}
+  .shade{background:linear-gradient(180deg,rgba(7,6,5,0) 0%,rgba(7,6,5,0) 46%,rgba(7,6,5,1) 56%,rgba(7,6,5,1) 100%)}
+  .panel{top:57%;bottom:auto;transform:none;right:20px;left:20px;max-width:none}
+  .tag{font-size:11.5px;padding:6px 11px;margin-bottom:14px}
+  .num{font-size:11.5px;margin-bottom:10px}
+  h1{font-size:33px;line-height:1.16;letter-spacing:-.04em}
+  h2{font-size:28px;line-height:1.2}
+  .lead{font-size:15px;line-height:1.65;margin-top:14px}
+  .row{margin-top:20px;gap:8px}
+  .row .btn{padding:12px 18px;font-size:14px}
+  .panel .row .btn.line{display:none}
+  .small{font-size:11.5px;margin-top:10px}
+  .ai,.up{left:50%;right:auto;top:auto;bottom:47%;transform:translateX(-50%);width:min(300px,78vw)}
+  .glass{padding:10px;border-radius:16px}
+  .thumb{border-radius:9px}
+  .thumb .tt b{font-size:16px}
+  .ai .meta,.up .sched{display:none}
+  .up .hd{font-size:13px;padding:4px 4px 10px}
   .dots{display:none}
+  .hint{bottom:20px;font-size:12px}
+  .loader{display:none}
   .facts{grid-template-columns:repeat(2,1fr)}
-  .lead{font-size:15.5px}
+  .facts div{padding:26px 20px}
 }
 @media (prefers-reduced-motion:reduce){.grain{animation:none}}
 </style>
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
+<div class="prog" id="prog"></div>
 
 <nav>
   <a class="logo" href="../">Cozy <b>Uploader</b></a>
@@ -141,7 +164,7 @@ footer a{color:var(--mute)}
     <canvas id="seq" aria-label="턴테이블이 돌아가는 장면"></canvas>
     <div class="shade"></div>
 
-    <div class="panel" data-from="0" data-to="0.2">
+    <div class="panel" data-from="0" data-to="0.11">
       <div class="tag"><i></i>AI 플레이리스트 자동화 프로그램</div>
       <h1>음악만 넣으세요.<br><em>채널은 매일</em><br>알아서 올라갑니다.</h1>
       <p class="lead">코지업로더는 <b>음악 플레이리스트 유튜브 채널</b>을 대신 운영하는 PC 프로그램입니다.
@@ -152,19 +175,19 @@ footer a{color:var(--mute)}
       </div>
     </div>
 
-    <div class="panel" id="how" data-from="0.24" data-to="0.44">
+    <div class="panel" id="how" data-from="0.15" data-to="0.33">
       <div class="num">STEP 01</div>
       <h2>곡을 폴더에<br>넣어 두세요</h2>
       <p class="lead">직접 만든 곡을 폴더에 넣어 두면, 코지가 그날 주제에 맞는 곡을 골라 <b>플레이리스트를 짭니다.</b></p>
     </div>
 
-    <div class="panel" data-from="0.48" data-to="0.68">
+    <div class="panel" data-from="0.37" data-to="0.68">
       <div class="num">STEP 02</div>
       <h2>그림·썸네일·제목은<br><em>AI가</em> 만듭니다</h2>
       <p class="lead">곡 분위기에 맞는 <b>배경 그림과 썸네일</b>, 검색에 걸리는 <b>제목·설명·태그</b>까지 씁니다.</p>
       <p class="small">AI는 제미나이·GPT 중 고르고, AI 사용료는 각 회사에 따로 냅니다.</p>
     </div>
-    <div class="ai" data-from="0.48" data-to="0.68">
+    <div class="ai" data-from="0.37" data-to="0.68">
       <div class="glass">
         <div class="thumb">
           <img id="thumbImg" alt="썸네일 예시">
@@ -178,12 +201,12 @@ footer a{color:var(--mute)}
       </div>
     </div>
 
-    <div class="panel" data-from="0.72" data-to="0.92">
+    <div class="panel" data-from="0.72" data-to="0.95">
       <div class="num">STEP 03</div>
       <h2>영상으로 만들어<br>매일 <em>자정에</em> 올립니다</h2>
       <p class="lead"><b>1080p 영상</b>으로 만들어 채널마다 <b>하루 1편씩</b> 예약 업로드합니다. 컴퓨터만 켜 두시면 됩니다.</p>
     </div>
-    <div class="up" data-from="0.72" data-to="0.92">
+    <div class="up" data-from="0.72" data-to="0.95">
       <div class="glass">
         <div class="hd"><span class="yt"></span>유튜브 예약 업로드</div>
         <div class="bar"><i id="upBar"></i></div>
@@ -193,6 +216,7 @@ footer a{color:var(--mute)}
     </div>
 
     <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="hint" id="hint">아래로 내려 보세요<svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <div class="loader" id="loader">LOADING 0%</div>
   </div>
 </section>
@@ -252,10 +276,11 @@ footer a{color:var(--mute)}
     const i = nearest(want); if (i < 0 || i === cur) return; cur = i;
     const im = imgs[i], W = cv.width, H = cv.height;
     const narrow = innerWidth < 860;
-    const r = Math.max(W / im.naturalWidth, H / im.naturalHeight) * (narrow ? 1.05 : 1.12);
+    const BH = narrow ? H * 0.58 : H;
+    const r = Math.max(W / im.naturalWidth, BH / im.naturalHeight) * (narrow ? 1.0 : 1.12);
     const w = im.naturalWidth * r, h = im.naturalHeight * r;
-    const x = narrow ? (W - w) / 2 : Math.min(0, W - w + W * 0.0) + (w - W) * 0.0 + Math.min(0, (W - w) / 2 + W * 0.08);
-    const y = narrow ? (H - h) / 2 - H * 0.14 : (H - h) / 2;
+    const x = narrow ? (W - w) / 2 : Math.max(W - w, Math.min(0, (W - w) / 2 + W * 0.08));
+    const y = narrow ? (BH - h) / 2 : (H - h) / 2;
     ctx.fillStyle = '#070605'; ctx.fillRect(0, 0, W, H);
     ctx.drawImage(im, x, y, w, h);
   }
@@ -279,21 +304,26 @@ footer a{color:var(--mute)}
     want = Math.round(smooth * (N - 1)); draw();
     panels.forEach(el => {
       const a = +el.dataset.from, b = +el.dataset.to, fade = 0.04;
-      const o = Math.min(a === 0 ? 1 : cl((smooth - a) / fade), cl((b - smooth) / fade));
+      let o = Math.min(a === 0 ? 1 : cl((smooth - a) / fade), cl((b - smooth) / fade));
+      let y = (1 - o) * 24;
+      if (a === 0) { o = cl(1 - smooth / b); y = -smooth / b * 60; }
       el.style.opacity = o;
-      el.style.translate = `0 ${(1 - o) * 24}px`;
+      el.style.translate = `0 ${y}px`;
       el.classList.toggle('on', o > 0.5);
     });
-    const step = smooth < 0.22 ? 0 : smooth < 0.46 ? 1 : smooth < 0.7 ? 2 : 3;
+    const step = smooth < 0.13 ? 0 : smooth < 0.35 ? 1 : smooth < 0.7 ? 2 : 3;
     dots.forEach((d, k) => d.classList.toggle('on', k === step));
-    const t = cl((smooth - 0.5) / 0.12);
+    const t = cl((smooth - 0.41) / 0.2);
     aiTitle.textContent = TITLE.slice(0, Math.round(TITLE.length * t));
-    const u = cl((smooth - 0.74) / 0.12);
+    const u = cl((smooth - 0.75) / 0.15);
     upBar.style.width = (u * 100) + '%';
     upTxt.textContent = u >= 1 ? '예약 완료' : `올리는 중 ${Math.round(u * 100)}%`;
     [...sched.children].forEach((e, k) => e.classList.toggle('ok', u >= (k + 1) / 7));
+    prog.style.width = (p * 100) + '%';
+    hint.classList.toggle('off', p > 0.015);
     requestAnimationFrame(tick);
   }
+  const prog = document.getElementById('prog'), hint = document.getElementById('hint');
   size(); tick();
 })();
 </script>
