@@ -102,45 +102,15 @@ footer a{color:var(--mute)}
   background:#0f0c0a;color:#f3ece2;font-size:22px;opacity:0;will-change:transform}
 .scr::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(115deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,0) 38%),radial-gradient(120% 90% at 50% 40%,transparent 60%,rgba(0,0,0,.35))}
-.s-top{height:76px;display:flex;align-items:center;gap:26px;padding:0 34px;background:#1a1410;border-bottom:1px solid #2c231c}
-.s-logo{font-size:26px;font-weight:800}.s-logo i{font-style:normal;color:var(--amber)}
-.s-live{display:flex;align-items:center;gap:10px;font-weight:700;color:#7dffa8;background:rgba(60,220,120,.12);padding:8px 16px;border-radius:99px}
-.s-live i{width:12px;height:12px;border-radius:50%;background:#3ddc78;box-shadow:0 0 12px #3ddc78;animation:pulse 1.2s ease-in-out infinite}
+.scr #app{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.s-bar{position:absolute;left:0;right:0;bottom:0;height:44px;display:flex;align-items:center;gap:22px;padding:0 20px;
+  background:rgba(0,0,0,.72);font-size:20px;white-space:nowrap}
+.s-live{display:flex;align-items:center;gap:9px;font-weight:700;color:#7dffa8}
+.s-live i{width:11px;height:11px;border-radius:50%;background:#3ddc78;box-shadow:0 0 10px #3ddc78;animation:pulse 1.2s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.25}}
-.s-fill{flex:1}
-.s-hand{color:#b3a99c}.s-hand b{color:#fff;font-size:28px;margin-left:6px}
-.s-clock{font-variant-numeric:tabular-nums;font-size:34px;font-weight:800;letter-spacing:.02em;min-width:150px;text-align:right}
-.s-body{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:24px;padding:26px 30px}
-.s-col h4{font-size:21px;color:var(--amber2);font-weight:700;margin-bottom:16px}
-.s-col ol{list-style:none;display:grid;gap:10px}
-.s-col li{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:#1b1612;color:#8d8378;transition:background .3s,color .3s}
-.s-col li .n{font-size:17px;color:#6d645b;width:26px}.s-col li .t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.s-col li .ok{color:#3ddc78;opacity:0;font-weight:800}
-.s-col li.on{background:#2a2019;color:#f3ece2}.s-col li.on .ok{opacity:1}
-.s-art{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#1b1612}
-.s-art img{width:100%;height:100%;object-fit:cover;display:block}
-.s-art .cv{position:absolute;inset:0;background:#1b1612;transform-origin:bottom}
-.s-art .cv::before{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--amber);box-shadow:0 0 18px 4px rgba(245,165,36,.7)}
-.s-art-t{position:absolute;left:18px;bottom:14px;right:18px}
-.s-art-t b{display:block;font-size:30px;font-weight:850;text-shadow:0 4px 16px rgba(0,0,0,.8)}.s-art-t span{font-size:17px;color:#f0dcc4}
-.s-pct{margin:14px 2px 6px;font-size:18px;color:var(--amber2)}
-.s-title{min-height:62px;font-size:21px;line-height:1.45;font-weight:600}
-.s-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.s-tags span{font-size:16px;padding:5px 10px;border-radius:8px;background:#241d17;color:#b3a99c;opacity:0;transition:opacity .4s}
-.s-tags.on span{opacity:1}
-.s-ch{padding:14px;border-radius:12px;background:#1b1612;margin-bottom:12px}
-.s-ch-h{display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:10px}
-.s-ch-h .st{margin-left:auto;font-size:17px;color:#8d8378;font-weight:600}.s-ch.done .st{color:#3ddc78}
-.yt{width:30px;height:21px;border-radius:6px;background:#ff2d2d;position:relative;flex:none}
-.yt::after{content:"";position:absolute;left:11px;top:5.5px;border-left:10px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent}
-.s-bar{height:9px;border-radius:9px;background:#2c231c;overflow:hidden}.s-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff5a3c,#ff2d2d)}
-.s-done{margin-top:16px;padding:14px;border-radius:12px;text-align:center;font-weight:800;font-size:21px;background:rgba(61,220,120,.14);color:#7dffa8;
-  opacity:0;transform:scale(.9);transition:opacity .4s,transform .5s cubic-bezier(.2,1.4,.4,1)}
-.s-done.on{opacity:1;transform:none}
-.s-log{position:absolute;left:30px;right:30px;bottom:22px;height:158px;border-top:1px solid #2c231c;padding-top:16px;
-  display:grid;grid-template-columns:1fr 1fr;gap:8px 30px;align-content:start;font-size:19px;color:#8d8378}
-.s-log h4{grid-column:1/-1;font-size:17px;color:#6d645b;font-weight:700;letter-spacing:.06em}
-.s-log div{opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
-.s-log div.on{opacity:1;transform:none}.s-log div b{color:#f3ece2;font-variant-numeric:tabular-nums;margin-right:12px}
+.s-cap{flex:1;text-align:center;font-weight:700;color:#ffd58a;overflow:hidden;text-overflow:ellipsis}
+.s-hand{color:#b3a99c}.s-hand b{color:#fff;margin-left:6px}
+.s-clock{font-variant-numeric:tabular-nums;font-weight:800;min-width:100px;text-align:right}
 .solo nav,.solo .after,.solo .panel,.solo .shade,.solo #seq,.solo .hint,.solo .prog,.solo .dots,.solo .grain,.solo .loader{display:none}
 .solo .scrolly{height:720px}.solo .scr{opacity:1!important;transform:none!important;filter:none!important}
 
@@ -185,18 +155,9 @@ footer a{color:var(--mute)}
   <div class="stage">
     <canvas id="seq" aria-label="턴테이블이 돌아가는 장면"></canvas>
     <div class="scr" id="scr" aria-hidden="true">
-      <div class="s-top"><b class="s-logo">Cozy <i>Uploader</i></b><span class="s-live"><i></i>자동 운영 중</span><span class="s-fill"></span>
+      <img id="app" alt="">
+      <div class="s-bar"><span class="s-live"><i></i>자동 운영 중</span><span class="s-cap" id="cap"></span>
         <span class="s-hand">사람이 누른 횟수<b>0</b></span><span class="s-clock" id="sClock">23:12</span></div>
-      <div class="s-body">
-        <section class="s-col"><h4>① 오늘의 플레이리스트</h4><ol id="sList"><li><span class="n">01</span><span class="t">Rain on the Window</span><span class="d">3:41</span><span class="ok">✓</span></li><li><span class="n">02</span><span class="t">Midnight Study</span><span class="d">3:48</span><span class="ok">✓</span></li><li><span class="n">03</span><span class="t">Warm Coffee Steam</span><span class="d">3:55</span><span class="ok">✓</span></li><li><span class="n">04</span><span class="t">Slow Train Home</span><span class="d">3:02</span><span class="ok">✓</span></li><li><span class="n">05</span><span class="t">Paper Lanterns</span><span class="d">3:09</span><span class="ok">✓</span></li><li><span class="n">06</span><span class="t">Sleepy Streetlights</span><span class="d">3:16</span><span class="ok">✓</span></li></ol></section>
-        <section class="s-col"><h4>② AI가 만드는 중</h4>
-          <div class="s-art"><img src="scr-art.jpg" alt=""><div class="cv" id="sCv"></div>
-            <div class="s-art-t"><b>Rainy Night Lofi</b><span>1 Hour · 공부할 때 듣는 음악</span></div></div>
-          <div class="s-pct" id="sPct">그림 그리는 중 0%</div><div class="s-title" id="sTitle"></div>
-          <div class="s-tags" id="sTags"><span>#lofi</span><span>#studymusic</span><span>#rainyday</span><span>#chill</span></div></section>
-        <section class="s-col"><h4>③ 유튜브 예약 업로드</h4><div class="s-ch"><div class="s-ch-h"><span class="yt"></span>채널 1 · Lofi Cafe<span class="st">대기</span></div><div class="s-bar"><i></i></div></div><div class="s-ch"><div class="s-ch-h"><span class="yt"></span>채널 2 · Rainy Desk<span class="st">대기</span></div><div class="s-bar"><i></i></div></div><div class="s-ch"><div class="s-ch-h"><span class="yt"></span>채널 3 · Night Piano<span class="st">대기</span></div><div class="s-bar"><i></i></div></div><div class="s-done" id="sDone">00:00 · 3개 채널 공개 완료</div></section>
-      </div>
-      <div class="s-log" id="sLog"><h4>작업 기록 · 사람 손 없이 진행됨</h4><div><b>23:12</b>곡 6개로 오늘의 플레이리스트 완성</div><div><b>23:21</b>AI가 배경 그림·썸네일 완성</div><div><b>23:27</b>AI가 제목·설명·태그 작성</div><div><b>23:40</b>1080p 1시간 영상 만들기 완료</div><div><b>23:52</b>채널 3곳에 00:00 예약 완료</div><div><b>00:00</b>유튜브에 공개됨 · 다음 작업은 내일 밤</div></div>
     </div>
     <div class="shade"></div>
 
@@ -353,32 +314,25 @@ footer a{color:var(--mute)}
     scr.style.opacity = 1;
   }
 
-  // ---- 화면 속 내용: 스크롤에 따라 프로그램이 스스로 일함 ----
-  const sList = [...document.querySelectorAll('#sList li')];
-  const sCv = document.getElementById('sCv'), sPct = document.getElementById('sPct'), sTitle = document.getElementById('sTitle');
-  const sTags = document.getElementById('sTags'), sDone = document.getElementById('sDone'), sClock = document.getElementById('sClock');
-  const sCh = [...document.querySelectorAll('.s-ch')];
-  const sLog = [...document.querySelectorAll('#sLog div')], LOGAT = [0.30, 0.51, 0.63, 0.70, 0.93, 0.95];
-  const TITLE = '비 오는 밤, 창가에서 듣는 로파이 1시간 | 공부·잠잘 때';
+  // ---- 화면 속 내용: 실제 코지업로더 녹화를 스크롤에 맞춰 빠르게 넘김 ----
+  const app = document.getElementById('app'), cap = document.getElementById('cap'), sClock = document.getElementById('sClock');
+  let AM = [], aOk = [], aCur = -1;
+  fetch('app/meta.json').then(r => r.json()).then(m => {
+    AM = m; aOk = m.map(() => false);
+    const ord = [];   // seq처럼 띄엄띄엄 먼저, 사이는 나중에
+    for (let s = 8; s >= 1; s = Math.floor(s / 2)) for (let i = 0; i < m.length; i += s) if (!ord.includes(i)) ord.push(i);
+    ord.forEach(i => { const im = new Image(); im.src = 'app/a_' + pad(i + 1) + '.webp';
+      im.decode().then(() => { aOk[i] = true; aCur = -1; }, () => {}); });
+  });
   function screenState(v) {
-    sList.forEach((li, k) => li.classList.toggle('on', v > 0.10 + k * 0.035));
-    const g = cl((v - 0.39) / 0.12);
-    sCv.style.transform = `scaleY(${1 - g})`;
-    sPct.textContent = g < 1 ? `AI가 그림 그리는 중 ${Math.round(g * 100)}%` : 'AI가 쓴 제목';
-    sTitle.textContent = TITLE.slice(0, Math.round(TITLE.length * cl((v - 0.50) / 0.12)));
-    sTags.classList.toggle('on', v > 0.63);
-    sCh.forEach((c, k) => {
-      const u = cl((v - 0.72 - k * 0.07) / 0.07);
-      c.querySelector('i').style.width = u * 100 + '%';
-      c.querySelector('.st').textContent = u >= 1 ? '예약 완료 ✓' : u > 0 ? `${Math.round(u * 100)}%` : '대기';
-      c.classList.toggle('done', u >= 1);
-    });
-    const min = (23 * 60 + 12 + Math.round(cl((v - 0.70) / 0.25) * 48)) % 1440;
-    const sec = v >= 0.95 ? 0 : new Date().getSeconds();
+    let i = AM.length - 1; while (i > 0 && AM[i].v > v) i--;
+    let k = i; while (k >= 0 && !aOk[k]) k--;   // 아직 안 받은 장이면 받은 것 중 바로 앞 장
+    if (k < 0) for (k = i; k < AM.length && !aOk[k]; k++);
+    if (k >= 0 && k < AM.length && k !== aCur) { aCur = k; app.src = 'app/a_' + pad(k + 1) + '.webp'; cap.textContent = AM[k].cap; }
+    const min = (23 * 60 + 12 + Math.round(cl((v - 0.40) / 0.50) * 48)) % 1440;
+    const sec = v >= 0.90 ? 0 : new Date().getSeconds();
     const p2 = n => String(n).padStart(2, '0');
     sClock.textContent = `${p2(Math.floor(min / 60))}:${p2(min % 60)}:${p2(sec)}`;
-    sDone.classList.toggle('on', v >= 0.95);
-    sLog.forEach((e, k) => e.classList.toggle('on', v >= LOGAT[k]));
   }
 
   const sc = document.getElementById('scrolly');
