@@ -287,7 +287,8 @@ footer a{color:var(--mute)}
   const sstep = (v, a, b) => { const t = cl((v - a) / (b - a)); return t * t * (3 - 2 * t); };
   function size() {
     const d = Math.min(devicePixelRatio || 1, 2);
-    cv.width = innerWidth * d; cv.height = innerHeight * d; cur = -1; draw();
+    // 캔버스가 실제로 차지하는 크기로 맞춤(휴대폰은 주소창 때문에 innerHeight와 다름)
+    cv.width = Math.round(cv.clientWidth * d); cv.height = Math.round(cv.clientHeight * d); cur = -1; draw();
   }
   function nearest(i) { for (let k = 0; k < N; k++) { if (ready[i - k]) return i - k; if (ready[i + k]) return i + k; } return -1; }
   function draw() {
@@ -326,10 +327,11 @@ footer a{color:var(--mute)}
         ctx.fillStyle = g; ctx.fillRect(0, Math.min(a, b), W, Math.abs(b - a));
       }
     }
-    L = { x, y, w, h, d: W / innerWidth, m };
+    L = { x, y, w, h, d: W / cv.clientWidth, m };
     place();
   }
   addEventListener('resize', size);
+  new ResizeObserver(size).observe(cv);
 
   // ---- 모니터 화면: 1280x720 사각형을 장면 속 화면의 네 귀퉁이에 맞춤 ----
   const scr = document.getElementById('scr');
