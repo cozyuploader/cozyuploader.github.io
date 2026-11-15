@@ -164,7 +164,7 @@ footer a{color:var(--mute)}
     <canvas id="seq" aria-label="턴테이블이 돌아가는 장면"></canvas>
     <div class="shade"></div>
 
-    <div class="panel" data-from="0" data-to="0.11">
+    <div class="panel" data-from="0" data-to="0.13">
       <div class="tag"><i></i>AI 플레이리스트 자동화 프로그램</div>
       <h1>음악만 넣으세요.<br><em>채널은 매일</em><br>알아서 올라갑니다.</h1>
       <p class="lead">코지업로더는 <b>음악 플레이리스트 유튜브 채널</b>을 대신 운영하는 PC 프로그램입니다.
@@ -175,19 +175,19 @@ footer a{color:var(--mute)}
       </div>
     </div>
 
-    <div class="panel" id="how" data-from="0.15" data-to="0.33">
+    <div class="panel" id="how" data-from="0.13" data-to="0.35">
       <div class="num">STEP 01</div>
       <h2>곡을 폴더에<br>넣어 두세요</h2>
       <p class="lead">직접 만든 곡을 폴더에 넣어 두면, 코지가 그날 주제에 맞는 곡을 골라 <b>플레이리스트를 짭니다.</b></p>
     </div>
 
-    <div class="panel" data-from="0.37" data-to="0.68">
+    <div class="panel" data-from="0.35" data-to="0.70">
       <div class="num">STEP 02</div>
       <h2>그림·썸네일·제목은<br><em>AI가</em> 만듭니다</h2>
       <p class="lead">곡 분위기에 맞는 <b>배경 그림과 썸네일</b>, 검색에 걸리는 <b>제목·설명·태그</b>까지 씁니다.</p>
       <p class="small">AI는 제미나이·GPT 중 고르고, AI 사용료는 각 회사에 따로 냅니다.</p>
     </div>
-    <div class="ai" data-from="0.37" data-to="0.68">
+    <div class="ai" data-from="0.35" data-to="0.70">
       <div class="glass">
         <div class="thumb">
           <img id="thumbImg" alt="썸네일 예시">
@@ -201,12 +201,12 @@ footer a{color:var(--mute)}
       </div>
     </div>
 
-    <div class="panel" data-from="0.72" data-to="0.95">
+    <div class="panel" data-from="0.70" data-to="1.05">
       <div class="num">STEP 03</div>
       <h2>영상으로 만들어<br>매일 <em>자정에</em> 올립니다</h2>
       <p class="lead"><b>1080p 영상</b>으로 만들어 채널마다 <b>하루 1편씩</b> 예약 업로드합니다. 컴퓨터만 켜 두시면 됩니다.</p>
     </div>
-    <div class="up" data-from="0.72" data-to="0.95">
+    <div class="up" data-from="0.70" data-to="1.05">
       <div class="glass">
         <div class="hd"><span class="yt"></span>유튜브 예약 업로드</div>
         <div class="bar"><i id="upBar"></i></div>
@@ -303,10 +303,11 @@ footer a{color:var(--mute)}
     smooth += (p - smooth) * 0.12;
     want = Math.round(smooth * (N - 1)); draw();
     panels.forEach(el => {
-      const a = +el.dataset.from, b = +el.dataset.to, fade = 0.04;
+      // 구간이 맞닿아 있어 글 없는 화면은 경계의 한 순간뿐
+      const a = +el.dataset.from, b = +el.dataset.to, fade = 0.006;
       let o = Math.min(a === 0 ? 1 : cl((smooth - a) / fade), cl((b - smooth) / fade));
       let y = (1 - o) * 24;
-      if (a === 0) { o = cl(1 - smooth / b); y = -smooth / b * 60; }
+      if (a === 0) { o = cl((b - smooth) / 0.008); y = -smooth / b * 60; }
       el.style.opacity = o;
       el.style.translate = `0 ${y}px`;
       el.classList.toggle('on', o > 0.5);
