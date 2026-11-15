@@ -55,8 +55,19 @@ nav .btn{padding:10px 18px;font-size:13px}
 .loader{position:absolute;left:clamp(16px,6vw,96px);bottom:28px;font-size:12px;letter-spacing:.2em;color:var(--dim)}
 
 .panel{position:absolute;left:clamp(16px,6vw,96px);top:50%;transform:translateY(-50%);max-width:min(720px,52vw);
-  opacity:0;pointer-events:none;will-change:opacity}
+  pointer-events:none}
 .panel.on{pointer-events:auto}
+/* 글은 스크롤 위치가 아니라 시간으로 부드럽게 바뀜: 나갈 땐 빨리, 들어올 땐 줄마다 차례로 */
+.panel>*{opacity:0;translate:0 26px;filter:blur(8px);transform:translateY(var(--dy,0px));
+  transition:opacity .28s ease,translate .28s ease,filter .28s ease}
+.panel.on>*{opacity:1;translate:0 0;filter:blur(0);
+  transition:opacity .7s ease,translate .9s cubic-bezier(.16,.8,.2,1),filter .7s ease}
+.panel.on>:nth-child(1){transition-delay:.15s}
+.panel.on>:nth-child(2){transition-delay:.25s}
+.panel.on>:nth-child(3){transition-delay:.37s}
+.panel.on>:nth-child(4){transition-delay:.49s}
+.ai,.up{scale:.94;transition:opacity .3s ease,scale .3s ease}
+.ai.on,.up.on{opacity:1;scale:1;transition:opacity .8s ease .35s,scale 1s cubic-bezier(.16,.8,.2,1) .35s}
 .tag{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--amber2);
   padding:8px 14px;border:1px solid rgba(245,165,36,.35);border-radius:999px;background:rgba(245,165,36,.08);margin-bottom:26px}
 .tag i{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 14px var(--amber)}
@@ -303,14 +314,10 @@ footer a{color:var(--mute)}
     smooth += (p - smooth) * 0.12;
     want = Math.round(smooth * (N - 1)); draw();
     panels.forEach(el => {
-      // 구간이 맞닿아 있어 글 없는 화면은 경계의 한 순간뿐
-      const a = +el.dataset.from, b = +el.dataset.to, fade = 0.006;
-      let o = Math.min(a === 0 ? 1 : cl((smooth - a) / fade), cl((b - smooth) / fade));
-      let y = (1 - o) * 24;
-      if (a === 0) { o = cl((b - smooth) / 0.008); y = -smooth / b * 60; }
-      el.style.opacity = o;
-      el.style.translate = `0 ${y}px`;
-      el.classList.toggle('on', o > 0.5);
+      // 구간이 맞닿아 있어 늘 한 패널이 켜져 있음, 바뀌는 모습은 CSS 전환이 맡음
+      const a = +el.dataset.from, b = +el.dataset.to;
+      el.classList.toggle('on', smooth >= a && smooth < b);
+      if (a === 0) el.style.setProperty('--dy', (-smooth / b * 60) + 'px');
     });
     const step = smooth < 0.13 ? 0 : smooth < 0.35 ? 1 : smooth < 0.7 ? 2 : 3;
     dots.forEach((d, k) => d.classList.toggle('on', k === step));
