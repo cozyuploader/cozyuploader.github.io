@@ -39,6 +39,7 @@ nav .btn{padding:10px 18px;font-size:13px}
   border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer}
 .snd i{width:8px;height:8px;border-radius:50%;background:#555}
 .snd.on{color:var(--ink)}.snd.on i{background:#4ade80;box-shadow:0 0 8px #4ade80}
+.snd.on:not(.live){animation:sndPulse 1.4s ease-in-out infinite}@keyframes sndPulse{50%{box-shadow:0 0 0 6px rgba(74,222,128,.25);border-color:#4ade80}}
 .arr{width:16px;height:16px}
 
 /* 스크롤 장면 */
@@ -369,7 +370,7 @@ footer a{color:var(--mute)}
   let sndOff = false;
   function bgmPlay() {
     bgm.volume = 0;
-    bgm.play().then(() => { snd.classList.add('on'); snd.textContent = 'BGM on';
+    bgm.play().then(() => { snd.classList.add('on', 'live'); snd.textContent = 'BGM on';
       const f = setInterval(() => { bgm.volume = Math.min(0.22, bgm.volume + 0.02); if (bgm.volume >= 0.22) clearInterval(f); }, 120);
     }).catch(() => {});
   }
