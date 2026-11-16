@@ -374,8 +374,9 @@ footer a{color:var(--mute)}
     }).catch(() => {});
   }
   snd.onclick = () => { if (bgm.paused) { sndOff = false; bgmPlay(); } else { sndOff = true; bgm.pause(); snd.classList.remove('on'); snd.textContent = 'BGM off'; } };
+  // 휴대폰은 손가락을 뗄 때(pointerup/touchend), 마우스는 누를 때부터 소리가 허용된다
   const firstTouch = e => { if (!snd.contains(e.target) && bgm.paused && !sndOff) bgmPlay(); };
-  addEventListener('pointerdown', firstTouch); addEventListener('keydown', firstTouch);
+  ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach(t => addEventListener(t, firstTouch));
   bgmPlay();
   size(); tick();
 })();
