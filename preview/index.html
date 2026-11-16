@@ -151,7 +151,7 @@ footer a{color:var(--mute)}
   <div class="nav-r">
     <a class="t" href="../manual.html">사용설명서</a>
     <a class="t" href="../youtube-api-guide.html">설치 가이드</a>
-    <button class="snd" id="snd" type="button">배경음 켜기</button>
+    <button class="snd on" id="snd" type="button">BGM on</button>
     <a class="btn solid" href="../buy.html">구매하기</a>
   </div>
 </nav>
@@ -369,11 +369,11 @@ footer a{color:var(--mute)}
   let sndOff = false;
   function bgmPlay() {
     bgm.volume = 0;
-    bgm.play().then(() => { snd.classList.add('on'); snd.textContent = '배경음 끄기';
+    bgm.play().then(() => { snd.classList.add('on'); snd.textContent = 'BGM on';
       const f = setInterval(() => { bgm.volume = Math.min(0.22, bgm.volume + 0.02); if (bgm.volume >= 0.22) clearInterval(f); }, 120);
     }).catch(() => {});
   }
-  snd.onclick = () => { if (bgm.paused) { sndOff = false; bgmPlay(); } else { sndOff = true; bgm.pause(); snd.classList.remove('on'); snd.textContent = '배경음 켜기'; } };
+  snd.onclick = () => { if (bgm.paused) { sndOff = false; bgmPlay(); } else { sndOff = true; bgm.pause(); snd.classList.remove('on'); snd.textContent = 'BGM off'; } };
   const firstTouch = e => { if (!snd.contains(e.target) && bgm.paused && !sndOff) bgmPlay(); };
   addEventListener('pointerdown', firstTouch); addEventListener('keydown', firstTouch);
   bgmPlay();
