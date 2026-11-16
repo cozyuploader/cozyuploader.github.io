@@ -151,7 +151,7 @@ footer a{color:var(--mute)}
   <div class="nav-r">
     <a class="t" href="../manual.html">사용설명서</a>
     <a class="t" href="../youtube-api-guide.html">설치 가이드</a>
-    <button class="snd" id="snd" type="button" aria-label="배경음 켜고 끄기"><i></i>배경음</button>
+    <button class="snd" id="snd" type="button">배경음 켜기</button>
     <a class="btn solid" href="../buy.html">구매하기</a>
   </div>
 </nav>
@@ -227,7 +227,7 @@ footer a{color:var(--mute)}
   </footer>
 </div>
 
-<audio id="bgm" loop preload="none" src="bgm.mp3"></audio>
+<audio id="bgm" loop preload="auto" src="bgm.mp3"></audio>
 <script>
 (() => {
   const N = 180, DIR = 'seq/', pad = n => String(n).padStart(4, '0');
@@ -364,18 +364,19 @@ footer a{color:var(--mute)}
     requestAnimationFrame(tick);
   }
   const prog = document.getElementById('prog'), hint = document.getElementById('hint');
-  // ---- 배경음: 브라우저는 손대기 전엔 소리를 못 내므로 첫 터치/클릭에 잔잔하게 시작, 단추로 끄고 켬 ----
+  // ---- 배경음: 들어오자마자 재생 시도, 브라우저가 막으면 첫 터치/클릭에 시작. 글자 단추로 끄고 켬 ----
   const bgm = document.getElementById('bgm'), snd = document.getElementById('snd');
   let sndOff = false;
   function bgmPlay() {
     bgm.volume = 0;
-    bgm.play().then(() => { snd.classList.add('on');
+    bgm.play().then(() => { snd.classList.add('on'); snd.textContent = '배경음 끄기';
       const f = setInterval(() => { bgm.volume = Math.min(0.22, bgm.volume + 0.02); if (bgm.volume >= 0.22) clearInterval(f); }, 120);
     }).catch(() => {});
   }
-  snd.onclick = () => { if (bgm.paused) { sndOff = false; bgmPlay(); } else { sndOff = true; bgm.pause(); snd.classList.remove('on'); } };
+  snd.onclick = () => { if (bgm.paused) { sndOff = false; bgmPlay(); } else { sndOff = true; bgm.pause(); snd.classList.remove('on'); snd.textContent = '배경음 켜기'; } };
   const firstTouch = e => { if (!snd.contains(e.target) && bgm.paused && !sndOff) bgmPlay(); };
   addEventListener('pointerdown', firstTouch); addEventListener('keydown', firstTouch);
+  bgmPlay();
   size(); tick();
 })();
 </script>
